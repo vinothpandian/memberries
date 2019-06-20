@@ -1,0 +1,16 @@
+$chart-area: 75%;
+$sidebar-area: 100% - $chart-area;
+
+.container {
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  grid-template-columns: $chart-area $sidebar-area;
+
+  place-content: center;
+}
+
+.chart-wrapper {
+  display: flex;
+  place-content: center;
+}
