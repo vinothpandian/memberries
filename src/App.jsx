@@ -21,13 +21,13 @@ const data = [
   },
   {
     name: 'Page B',
-    uv: 3000,
+    uv: 2000,
     pv: 1398,
     amt: 2210,
   },
   {
     name: 'Page C',
-    uv: 2000,
+    uv: 5000,
     pv: 9800,
     amt: 2290,
   },
