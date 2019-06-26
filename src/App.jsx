@@ -1,8 +1,15 @@
 import React from 'react';
 import './App.scss';
+import { DbProvider } from './db';
+
+import Home from './containers/Home';
 
 function App() {
-  return <h1>Memberries</h1>;
+  return (
+    <DbProvider>
+      <Home />
+    </DbProvider>
+  );
 }
 
 export default App;
