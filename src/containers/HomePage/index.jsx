@@ -7,10 +7,10 @@ import Col from 'react-bootstrap/Col';
 
 import Graph from '../Graph';
 import TopicList from '../TopicList';
-import TopicEditor from '../TopicEditor';
+
 import Database, { withDb } from '../../db';
 
-const Home = ({ db }) => {
+const HomePage = ({ db }) => {
   const [topics, setTopics] = useState([]);
 
   useEffect(() => {
@@ -35,8 +35,8 @@ const Home = ({ db }) => {
   );
 };
 
-Home.propTypes = {
+HomePage.propTypes = {
   db: PropTypes.instanceOf(Database).isRequired,
 };
 
-export default withDb(Home);
+export default withDb(HomePage);

@@ -25,10 +25,19 @@ class Database {
   }
 
   getTopic(id) {
-    return this.db
-      .get('topics')
-      .find({ id })
-      .value();
+    return new Promise((resolve, reject) => {
+      const value = this.db
+        .get('topics')
+        .find({ id })
+        .value();
+
+      if (value) {
+        resolve(value);
+      }
+
+      const error = new Error(`${id} not found`);
+      reject(error);
+    });
   }
 
   getTopics() {
