@@ -31,8 +31,9 @@ const SignUpForm = (props) => {
       initialValues={{ name: '', description: '', difficulty: 5 }}
       onSubmit={(values) => {
         const { db } = props;
+        const { name, description, difficulty } = values;
 
-        console.log(values, db.getTopics());
+        db.pushTopic(name, description, difficulty);
       }}
     >
       {({

@@ -18,7 +18,7 @@ class Database {
         id: uniqueId('topic_'),
         name,
         description,
-        lastReviewed: [],
+        lastReviewed: [Date.now()],
         difficulty,
       })
       .write().id;
