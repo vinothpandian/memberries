@@ -7,7 +7,7 @@ import { withRouter } from 'react-router';
 const ErrorPage = ({ location }) => (
   <div>
     <p>Page not found! </p>
-    <p>{location.state.message}</p>
+    <p>{location.state && location.state.message}</p>
   </div>
 );
 

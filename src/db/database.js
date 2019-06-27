@@ -1,6 +1,6 @@
 import low from 'lowdb';
 import LocalStorage from 'lowdb/adapters/LocalStorage';
-import uniqueId from 'lodash/uniqueId';
+import shortid from 'shortid';
 
 const adapter = new LocalStorage('db');
 
@@ -12,16 +12,31 @@ class Database {
   }
 
   pushTopic(name, description, difficulty) {
-    return this.db
-      .get('topics')
-      .push({
-        id: uniqueId('topic_'),
-        name,
-        description,
-        lastReviewed: [Date.now()],
-        difficulty,
-      })
-      .write().id;
+    return new Promise((resolve, reject) => {
+      const id = shortid.generate();
+
+      const lastReview = Date.now();
+
+      this.db
+        .get('topics')
+        .push({
+          id,
+          name,
+          description,
+          lastReviewed: [lastReview],
+          difficulty,
+        })
+        .write();
+
+      const found = this.getTopic(id);
+
+      if (found) {
+        resolve(found);
+      }
+
+      const error = new Error("Couldn't store data");
+      reject(error);
+    });
   }
 
   getTopic(id) {
