@@ -6,6 +6,7 @@
     "formik": "^1.5.7",
     "lodash": "^4.17.11",
     "lowdb": "^1.0.0",
+    "node-sass": "^4.12.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-bootstrap": "^1.0.0-beta.9",

@@ -22,8 +22,8 @@ const Home = ({ db }) => {
   }, [db]);
 
   return (
-    <Container>
-      <Row>
+    <Container fluid className="h-100">
+      <Row className="justify-content-center align-items-center h-100">
         <Col xs="8">
           <Graph topics={topics} />
         </Col>
