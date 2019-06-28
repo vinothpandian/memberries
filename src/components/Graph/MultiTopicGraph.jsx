@@ -8,12 +8,11 @@ import {
   CartesianGrid,
   Tooltip,
   Line,
+  Label,
   ResponsiveContainer,
 } from 'recharts';
 
-import Label from 'recharts/es6/component/Label';
-
-const Graph = ({ graphData, topics }) => (
+const MultiTopicGraph = ({ graphData, topics }) => (
   <ResponsiveContainer width="80%" aspect={1.8}>
     <LineChart
       style={{ margin: '0 auto' }}
@@ -47,11 +46,11 @@ const Graph = ({ graphData, topics }) => (
   </ResponsiveContainer>
 );
 
-Graph.propTypes = {
+MultiTopicGraph.propTypes = {
   // eslint-disable-next-line
   topics: PropTypes.any,
   // eslint-disable-next-line
   graphData: PropTypes.any
 };
 
-export default Graph;
+export default MultiTopicGraph;

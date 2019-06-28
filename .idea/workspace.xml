@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bfbec72e-52f4-4f86-9b38-21e0c26a9a72" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/HomePage/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/HomePage/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/TopicList/TopicItem.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/TopicList/TopicItem.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/containers/TopicList/index.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/containers/TopicList/index.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/db/database.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/db/database.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
-    </list>
+    <list default="true" id="bfbec72e-52f4-4f86-9b38-21e0c26a9a72" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -68,8 +61,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/utils/chart.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+            <state relative-caret-position="330">
+              <caret line="15" column="19" lean-forward="true" selection-start-line="15" selection-start-column="19" selection-end-line="15" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -165,6 +158,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -204,12 +198,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1561719010757</updated>
-      <workItem from="1561719013353" duration="13099000" />
+      <workItem from="1561719013353" duration="13319000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="13099000" />
+    <option name="totallyTimeSpent" value="13319000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1720" height="1392" extended-state="4" />
@@ -221,7 +215,7 @@
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Docker" order="0" />
       <window_info anchor="bottom" id="Version Control" order="1" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="2" visible="true" weight="0.3282504" />
+      <window_info anchor="bottom" id="Terminal" order="2" weight="0.3282504" />
       <window_info anchor="bottom" id="Event Log" order="3" side_tool="true" weight="0.33146068" />
       <window_info anchor="bottom" id="Message" order="4" />
       <window_info anchor="bottom" id="Find" order="5" />
@@ -314,8 +308,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/utils/chart.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        <state relative-caret-position="330">
+          <caret line="15" column="19" lean-forward="true" selection-start-line="15" selection-start-column="19" selection-end-line="15" selection-end-column="19" />
         </state>
       </provider>
     </entry>

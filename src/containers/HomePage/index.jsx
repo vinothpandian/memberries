@@ -7,7 +7,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 
-import Graph from './Graph';
+import { MultiTopicGraph } from '../../components/Graph';
 import TopicList from '../TopicList';
 
 import Database, { withDb } from '../../db';
@@ -33,7 +33,7 @@ const HomePage = ({ db }) => {
     <Container fluid className="h-100">
       <Row className="justify-content-center align-items-center h-100">
         <Col xs="8">
-          <Graph topics={chosenTopics} graphData={graphData} />
+          <MultiTopicGraph topics={chosenTopics} graphData={graphData} />
         </Col>
         <Col xs="4" className="h-100 mt-5">
           <Button as={Link} className="mb-4" to="/add" block>

@@ -3,12 +3,12 @@ import { schemeCategory10 } from 'd3-scale-chromatic';
 
 import { calculateRetention, findLastReview } from '.';
 
-const colors = scaleOrdinal(schemeCategory10).range();
+export const colors = scaleOrdinal(schemeCategory10).range();
 
-export const getColoredTopics = topics => topics.slice(0, 7).map((topic, index) => ({
-  ...topic,
-  color: colors[index],
-}));
+export const getColoredTopics = topics => topics.map((topic, i) => ({
+    color: colors[i],
+    ...topic,
+  }));
 
 export const getGraphData = (topics) => {
   const days = [...Array(100).keys()];
@@ -24,7 +24,7 @@ export const getGraphData = (topics) => {
 
         const defaultRetention = calculateRetention(-day, difficulty);
 
-        if (defaultRetention < retention) return acc;
+        if (defaultRetention > retention) return acc;
         if (defaultRetention < 1) return acc;
 
         acc[name] = defaultRetention;
