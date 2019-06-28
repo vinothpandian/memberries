@@ -15,7 +15,12 @@ class Database {
     return new Promise((resolve, reject) => {
       const id = shortid.generate();
 
-      const lastReview = Date.now();
+      function randomDate(start, end) {
+        return new Date(
+          start.getTime() + Math.random() * (end.getTime() - start.getTime()),
+        );
+      }
+      const lastReview = randomDate(new Date(2019, 3, 1), new Date());
 
       this.db
         .get('topics')

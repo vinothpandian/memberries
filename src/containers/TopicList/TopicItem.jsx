@@ -7,7 +7,7 @@ import ReactRouterPropTypes from 'react-router-prop-types';
 import Button from 'react-bootstrap/Button';
 
 const TopicItem = ({
-  id, name, lastReviewed, history,
+  id, name, lastReviewed, history, color,
 }) => {
   const labelLength = 15;
   const label = name.length < labelLength ? name : `${name.slice(0, labelLength)}...`;
@@ -19,6 +19,7 @@ const TopicItem = ({
       onClick={() => {
         history.push(`/review/${id}`);
       }}
+      style={{ color }}
     >
       <span className="float-left">{label}</span>
       <span className="float-right">{lastReviewed}</span>
@@ -31,6 +32,7 @@ TopicItem.propTypes = {
   name: PropTypes.string.isRequired,
   lastReviewed: PropTypes.string.isRequired,
   history: ReactRouterPropTypes.history.isRequired,
+  color: PropTypes.string.isRequired,
 };
 
 export default withRouter(TopicItem);
