@@ -28,6 +28,7 @@ const HomePage = ({ db }) => {
           <DefaultGraph topics={topics} />
         </Col>
         <Col xs="4" className="h-100 mt-5">
+          <h1>Today I Learned</h1>
           <TopicEditorForm />
         </Col>
       </Row>

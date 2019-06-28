@@ -7,7 +7,7 @@ import {
   CartesianGrid,
   Line,
   Tooltip,
-  ResponsiveContainer
+  ResponsiveContainer,
 } from 'recharts';
 import { calculateRetention } from '../../utils';
 import { colors } from '../../utils/chart';
@@ -22,7 +22,7 @@ const DefaultGraph = () => {
       Easy: calculateRetention(-day, 4),
       Medium: calculateRetention(-day, 3),
       Hard: calculateRetention(-day, 2),
-      'Very hard': calculateRetention(-day, 1)
+      'Very hard': calculateRetention(-day, 1),
     }))
     .filter(v => v['Very easy'] > 10);
 

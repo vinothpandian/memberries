@@ -12,6 +12,7 @@ import TopicList from '../TopicList';
 
 import Database, { withDb } from '../../db';
 import { getColoredTopics, getGraphData } from '../../utils/chart';
+import { updateRetention } from '../../utils';
 
 const HomePage = ({ db }) => {
   const [topics, setTopics] = useState([]);
@@ -20,9 +21,10 @@ const HomePage = ({ db }) => {
   useEffect(() => {
     function fetchAll() {
       const data = db.getTopics();
-      const chosenData = getColoredTopics(data.slice(0, 7));
+      const withRetention = updateRetention(data);
+      const chosenData = getColoredTopics(withRetention.slice(0, 7));
       setChosenTopics(chosenData);
-      setTopics(data.slice(7));
+      setTopics(withRetention.slice(7));
     }
     fetchAll();
   }, [db]);

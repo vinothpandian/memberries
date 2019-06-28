@@ -6,9 +6,9 @@ import { calculateRetention, findLastReview } from '.';
 export const colors = scaleOrdinal(schemeCategory10).range();
 
 export const getColoredTopics = topics => topics.map((topic, i) => ({
-    color: colors[i],
-    ...topic,
-  }));
+  color: colors[i],
+  ...topic,
+}));
 
 export const getGraphData = (topics) => {
   const days = [...Array(100).keys()];

@@ -6,7 +6,7 @@ import { DbProps } from '../../db';
 
 const TopicList = ({ topics }) => topics.map((topic) => {
   const {
-    color, lastReviewed, name, id,
+    color, lastReviewed, name, id, retention,
   } = topic;
 
   const lastReview = lastReviewed[lastReviewed.length - 1];
@@ -18,6 +18,7 @@ const TopicList = ({ topics }) => topics.map((topic) => {
       id={id}
       name={name}
       lastReviewed={lastReviewTime}
+      retention={retention}
       color={color || 'black'}
     />
   );
