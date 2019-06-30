@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-
-import { withRouter } from 'react-router';
-
 import ReactRouterPropTypes from 'react-router-prop-types';
+
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
 import { compose } from 'recompose';
-import Database, { withDb } from '../../db';
+import { withRouter } from 'react-router';
+import { withDb, Database } from '../../db';
+import { DefaultGraph } from '../../components/Graph';
+import TopicInformation from './TopicInformation';
 
 const TopicPage = ({ history, match, db }) => {
   const { id } = match.params;
@@ -29,10 +34,16 @@ const TopicPage = ({ history, match, db }) => {
   }, [id, history, db]);
 
   return (
-    <div>
-      Topic:
-      {JSON.stringify(topic)}
-    </div>
+    <Container fluid className="h-100">
+      <Row className="justify-content-center align-items-center h-100">
+        <Col xs="8">
+          <DefaultGraph />
+        </Col>
+        <Col xs="4" className="h-100 mt-5">
+          <TopicInformation topic={topic} />
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

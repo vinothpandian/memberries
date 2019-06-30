@@ -13,7 +13,7 @@ import { compose } from 'recompose';
 import { MultiTopicGraph } from '../../components/Graph';
 import TopicList from '../TopicList';
 
-import Database, { withDb } from '../../db';
+import { withDb, Database } from '../../db';
 import { getColoredTopics, getGraphData } from '../../utils/chart';
 import { updateRetention } from '../../utils';
 

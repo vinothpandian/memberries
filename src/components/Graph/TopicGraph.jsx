@@ -12,7 +12,9 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-const TopicGraph = ({ graphData, topics }) => (
+import { DbProps } from '../../db';
+
+const TopicGraph = ({ graphData, topic }) => (
   <ResponsiveContainer width="80%" aspect={1.8}>
     <LineChart
       style={{ margin: '0 auto' }}
@@ -32,25 +34,15 @@ const TopicGraph = ({ graphData, topics }) => (
         <Label value="Retention" angle={-90} position="insideLeft" />
       </YAxis>
       <Tooltip labelFormatter={value => `Day ${value}`} />
-      {topics.map(topic => (
-        <Line
-          dot={false}
-          unit="%"
-          type="monotone"
-          key={topic.name}
-          dataKey={topic.name}
-          stroke={topic.color}
-        />
-      ))}
+      <Line unit="%" type="monotone" dataKey={topic.name} stroke={topic.color} />
     </LineChart>
   </ResponsiveContainer>
 );
 
 TopicGraph.propTypes = {
+  topic: Dbprops.topic.isRequired,
   // eslint-disable-next-line
-  topics: PropTypes.any,
-  // eslint-disable-next-line
-  graphData: PropTypes.any
+  graphData: PropTypes.any,
 };
 
 export default TopicGraph;

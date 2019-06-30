@@ -5,7 +5,5 @@ import DbProvider from './DbProvider';
 import * as DbProps from './props';
 
 export {
-  DbContext, DbProvider, withDb, DbProps,
+  DbContext, DbProvider, withDb, DbProps, Database,
 };
-
-export default Database;

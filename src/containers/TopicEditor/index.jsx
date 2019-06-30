@@ -7,7 +7,7 @@ import Col from 'react-bootstrap/Col';
 
 import TopicEditorForm from './TopicEditorForm';
 
-import Database, { withDb } from '../../db';
+import { withDb, Database } from '../../db';
 import DefaultGraph from '../../components/Graph/DefaultGraph';
 
 const HomePage = ({ db }) => {

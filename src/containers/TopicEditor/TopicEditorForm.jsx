@@ -11,7 +11,7 @@ import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 
-import Database, { withDb } from '../../db';
+import { withDb, Database } from '../../db';
 
 const schema = object({
   name: string().required('Name is required'),
