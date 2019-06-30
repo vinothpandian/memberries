@@ -17,7 +17,6 @@ const TopicList = ({ topics, onTopicClick }) => topics.map((topic) => {
   return (
     <TopicItem
       key={id}
-      id={id}
       name={name}
       lastReviewed={lastReviewTime}
       retention={retention}

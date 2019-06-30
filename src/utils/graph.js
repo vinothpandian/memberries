@@ -30,8 +30,8 @@ const getGraphDataForATopic = (topic) => {
 
   const noOfDaysSinceFirstReview = moment().diff(moment(firstDay), 'days');
 
-  const sinceFirstReview = range(0, noOfDaysSinceFirstReview + 1);
-  const fromLastReview = range(noOfDaysSinceFirstReview, noOfDaysSinceFirstReview + 100);
+  const sinceFirstReview = range(0, noOfDaysSinceFirstReview);
+  const fromLastReview = range(noOfDaysSinceFirstReview - 1, noOfDaysSinceFirstReview + 100);
 
   let since = 0;
   let difficulty = firstDifficulty;
