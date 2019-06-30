@@ -1,4 +1,5 @@
 import moment from 'moment';
+import _ from 'lodash';
 
 export const findLastReview = reviewDate => moment(reviewDate).diff(moment(), 'day');
 
@@ -8,10 +9,10 @@ export const calculateRetention = (lastReview, difficulty) => {
   return parseFloat(retention);
 };
 
-export const updateRetention = topics => topics.map((topic) => {
+export const updateRetentionForATopic = (topic) => {
   const { lastReviewed, difficulty } = topic;
 
-  const reviewDate = lastReviewed[lastReviewed.length - 1];
+  const { reviewDate } = _.last(_.sortBy(lastReviewed, 'reviewDate'));
   const lastReview = findLastReview(reviewDate);
   const retention = calculateRetention(lastReview, difficulty);
 
@@ -19,7 +20,9 @@ export const updateRetention = topics => topics.map((topic) => {
     ...topic,
     retention,
   };
-});
+};
+
+export const updateRetention = topics => topics.map(updateRetentionForATopic);
 
 export const randomHex = () => `#${'0123456789abcdef'
   .split('')

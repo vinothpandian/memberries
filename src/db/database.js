@@ -2,6 +2,8 @@ import low from 'lowdb';
 import LocalStorage from 'lowdb/adapters/LocalStorage';
 import shortid from 'shortid';
 
+import lastReviewed from './testcase';
+
 const adapter = new LocalStorage('db');
 
 class Database {
@@ -15,20 +17,13 @@ class Database {
     return new Promise((resolve, reject) => {
       const id = shortid.generate();
 
-      function randomDate(start, end) {
-        return new Date(
-          start.getTime() + Math.random() * (end.getTime() - start.getTime()),
-        );
-      }
-      const lastReview = randomDate(new Date(2019, 3, 1), new Date());
-
       this.db
         .get('topics')
         .push({
           id,
           name,
           description,
-          lastReviewed: [lastReview],
+          lastReviewed,
           difficulty,
         })
         .write();
