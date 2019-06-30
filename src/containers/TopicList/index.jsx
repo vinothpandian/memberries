@@ -1,10 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import moment from 'moment';
 
 import TopicItem from './TopicItem';
 import { DbProps } from '../../db';
 
-const TopicList = ({ topics }) => topics.map((topic) => {
+const TopicList = ({ topics, onTopicClick }) => topics.map((topic) => {
   const {
     color, lastReviewed, name, id, retention,
   } = topic;
@@ -20,12 +22,14 @@ const TopicList = ({ topics }) => topics.map((topic) => {
       lastReviewed={lastReviewTime}
       retention={retention}
       color={color || 'black'}
+      onTopicClick={onTopicClick(id)}
     />
   );
 });
 
 TopicList.propTypes = {
   topics: DbProps.topics.isRequired,
+  onTopicClick: PropTypes.func.isRequired,
 };
 
 export default TopicList;

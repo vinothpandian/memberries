@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { PropTypes } from 'prop-types';
-import { Link } from 'react-router-dom';
+
+import { withRouter } from 'react-router';
+import ReactRouterPropTypes from 'react-router-prop-types';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 
+import { compose } from 'recompose';
 import { MultiTopicGraph } from '../../components/Graph';
 import TopicList from '../TopicList';
 
@@ -14,7 +17,7 @@ import Database, { withDb } from '../../db';
 import { getColoredTopics, getGraphData } from '../../utils/chart';
 import { updateRetention } from '../../utils';
 
-const HomePage = ({ db }) => {
+const HomePage = ({ db, history }) => {
   const [topics, setTopics] = useState([]);
   const [chosenTopics, setChosenTopics] = useState([]);
 
@@ -29,6 +32,14 @@ const HomePage = ({ db }) => {
     fetchAll();
   }, [db]);
 
+  const onAddClick = () => {
+    history.push('/add');
+  };
+
+  const onTopicClick = id => () => {
+    history.push(`/review/${id}`);
+  };
+
   const graphData = getGraphData(chosenTopics);
 
   return (
@@ -38,10 +49,10 @@ const HomePage = ({ db }) => {
           <MultiTopicGraph topics={chosenTopics} graphData={graphData} />
         </Col>
         <Col xs="4" className="h-100 mt-5">
-          <Button as={Link} className="mb-4" to="/add" block>
+          <Button onClick={onAddClick} block>
             Add
           </Button>
-          <TopicList topics={[...chosenTopics, ...topics]} />
+          <TopicList topics={[...chosenTopics, ...topics]} onTopicClick={onTopicClick} />
         </Col>
       </Row>
     </Container>
@@ -50,6 +61,10 @@ const HomePage = ({ db }) => {
 
 HomePage.propTypes = {
   db: PropTypes.instanceOf(Database).isRequired,
+  history: ReactRouterPropTypes.history.isRequired,
 };
 
-export default withDb(HomePage);
+export default compose(
+  withDb,
+  withRouter,
+)(HomePage);

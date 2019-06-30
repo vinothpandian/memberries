@@ -22,10 +22,10 @@ const schema = object({
     .required('Difficulty is required'),
 });
 
-const TopicEditorForm = ({ db, history }) => (
+const TopicEditorForm = ({ db, history, initialValues }) => (
   <Formik
     validationSchema={schema}
-    initialValues={{ name: '', description: '', difficulty: 5 }}
+    initialValues={initialValues}
     onSubmit={async (values) => {
       const { name, description, difficulty } = values;
 
@@ -92,9 +92,22 @@ const TopicEditorForm = ({ db, history }) => (
   </Formik>
 );
 
+TopicEditorForm.defaultProps = {
+  initialValues: {
+    name: '',
+    description: '',
+    difficulty: 4,
+  },
+};
+
 TopicEditorForm.propTypes = {
   db: PropTypes.instanceOf(Database).isRequired,
   history: ReactRouterPropTypes.history.isRequired,
+  initialValues: PropTypes.shape({
+    name: PropTypes.string,
+    description: PropTypes.string,
+    difficulty: PropTypes.number,
+  }),
 };
 
 export default compose(
