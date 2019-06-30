@@ -11,23 +11,25 @@ import Button from 'react-bootstrap/Button';
 
 import { compose } from 'recompose';
 import { MultiTopicGraph } from '../../components/Graph';
-import TopicList from '../TopicList';
+import TopicList from '../../components/TopicList';
 
 import { withDb, Database } from '../../db';
-import { getColoredTopics, getGraphData } from '../../utils/chart';
+
+import { getGraphDataForAllTopics } from '../../utils/graph';
 import { updateRetention } from '../../utils';
 
 const HomePage = ({ db, history }) => {
   const [topics, setTopics] = useState([]);
-  const [chosenTopics, setChosenTopics] = useState([]);
+  const [graphData, setGraphData] = useState([]);
 
   useEffect(() => {
     function fetchAll() {
       const data = db.getTopics();
-      const withRetention = updateRetention(data);
-      const chosenData = getColoredTopics(withRetention.slice(0, 7));
-      setChosenTopics(chosenData);
-      setTopics(withRetention.slice(7));
+      const processedTopics = updateRetention(data);
+      const processedGraphData = getGraphDataForAllTopics(processedTopics);
+
+      setTopics(processedTopics);
+      setGraphData(processedGraphData);
     }
     fetchAll();
   }, [db]);
@@ -40,19 +42,17 @@ const HomePage = ({ db, history }) => {
     history.push(`/review/${id}`);
   };
 
-  const graphData = getGraphData(chosenTopics);
-
   return (
     <Container fluid className="h-100">
       <Row className="justify-content-center align-items-center h-100">
         <Col xs="8">
-          <MultiTopicGraph topics={chosenTopics} graphData={graphData} />
+          <MultiTopicGraph topics={topics} graphData={graphData} />
         </Col>
         <Col xs="4" className="h-100 mt-5">
           <Button onClick={onAddClick} block>
             Add
           </Button>
-          <TopicList topics={[...chosenTopics, ...topics]} onTopicClick={onTopicClick} />
+          <TopicList topics={topics} onTopicClick={onTopicClick} />
         </Col>
       </Row>
     </Container>
