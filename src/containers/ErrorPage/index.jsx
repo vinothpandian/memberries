@@ -1,18 +1,27 @@
 import React from 'react';
 import ReactRouterPropTypes from 'react-router-prop-types';
 
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+
 import { withRouter } from 'react-router';
+import { FullPageGrid } from '../../components';
 
 const ErrorPage = ({ location }) => (
-  <div className="d-flex justify-content-center align-items-center h-100">
-    <h1 className="mr-3 pr-3 align-top border-right inline-block align-content-center">404</h1>
-    <div className="inline-block align-middle">
-      <h2 className="font-weight-normal lead" id="desc">
-        The page you requested was not found.
-      </h2>
-      <span>{location.state && location.state.message}</span>
-    </div>
-  </div>
+  <FullPageGrid container direction="column" alignItems="center" justify="center" spacing={0}>
+    <Grid item xs={6}>
+      <div>
+        <Typography variant="h1" align="center">
+          404
+        </Typography>
+        <br />
+        <Typography variant="h5" color="textSecondary">
+          The page you requested was not found.
+        </Typography>
+        <span>{location.state && location.state.message}</span>
+      </div>
+    </Grid>
+  </FullPageGrid>
 );
 
 ErrorPage.propTypes = {

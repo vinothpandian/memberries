@@ -11,7 +11,7 @@ import Button from 'react-bootstrap/Button';
 
 import { compose } from 'recompose';
 import { MultiTopicGraph } from '../../components/Graph';
-import TopicList from '../../components/TopicList';
+// import TopicList from '../../components/TopicList';
 
 import { withDb, Database } from '../../db';
 
@@ -80,7 +80,7 @@ const HomePage = ({ db, history, match }) => {
           <Button onClick={onAddClick} block>
             Add
           </Button>
-          <TopicList topics={topics} onTopicClick={onTopicClick} />
+          {/* <TopicList topics={topics} onTopicClick={onTopicClick} /> */}
         </Col>
       </Row>
     </Container>

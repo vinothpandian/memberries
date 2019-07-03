@@ -1,34 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import moment from 'moment';
+import List from '@material-ui/core/List';
+import TopicListItem from '../TopicListItem';
 
-import TopicItem from './TopicItem';
-import { DbProps } from '../../db';
-
-const TopicList = ({ topics, onTopicClick }) => topics.map((topic) => {
-  const {
-    color, lastReviewed, name, id, retention,
-  } = topic;
-
-  const lastReview = lastReviewed[lastReviewed.length - 1];
-  const lastReviewTime = moment(lastReview).fromNow();
-
-  return (
-    <TopicItem
-      key={id}
-      name={name}
-      lastReviewed={lastReviewTime}
-      retention={retention}
-      color={color || 'black'}
-      onTopicClick={onTopicClick(id)}
-    />
-  );
-});
+const TopicList = ({ topics }) => (
+  <List>
+    {topics.map(topic => (
+      <TopicListItem key={topic.id} {...topic} />
+    ))}
+  </List>
+);
 
 TopicList.propTypes = {
-  topics: DbProps.topics.isRequired,
-  onTopicClick: PropTypes.func.isRequired,
+  topics: PropTypes.arrayOf({
+    id: PropTypes.string.isRequired,
+    retention: PropTypes.number.isRequired,
+    topicName: PropTypes.string.isRequired,
+    lastReviewed: PropTypes.string.isRequired,
+    to: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default TopicList;
