@@ -3,8 +3,7 @@ import Drawer from '@material-ui/core/Drawer';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
-import TopicList from '../TopicList';
-import AddButton from '../AddButton';
+import FormikForm from './FormikForm';
 
 const drawerWidth = 360;
 
@@ -23,7 +22,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const TopicDrawer = () => {
+const AddTopic = () => {
   const classes = useStyles();
 
   return (
@@ -37,13 +36,12 @@ const TopicDrawer = () => {
     >
       <div className={classes.toolbar}>
         <Typography className={classes.toolbarTitle} variant="h6" noWrap color="textSecondary">
-          To review
+          What did you learn?
         </Typography>
       </div>
-      <TopicList />
-      <AddButton />
+      <FormikForm />
     </Drawer>
   );
 };
 
-export default TopicDrawer;
+export default AddTopic;
