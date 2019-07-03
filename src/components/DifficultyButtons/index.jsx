@@ -14,6 +14,9 @@ const useStyles = makeStyles(theme => ({
   container: {
     marginLeft: -theme.spacing(1.5),
   },
+  error: {
+    marginLeft: -theme.spacing(7),
+  },
 }));
 
 const DifficultyButtons = ({
@@ -69,7 +72,7 @@ const DifficultyButtons = ({
       </Grid>
       <Grid item>
         {error && (
-          <Typography variant="caption" color="error">
+          <Typography className={classes.error} align="left" variant="caption" color="error">
             {helperText}
           </Typography>
         )}

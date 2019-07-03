@@ -1,9 +1,6 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import { StoryBookDecorator } from '..';
 import AddButton from '.';
 
-storiesOf('Add Button', module)
-  .addDecorator(StoryBookDecorator)
-  .add('default', () => <AddButton />);
+storiesOf('Add Button', module).add('default', () => <AddButton />);

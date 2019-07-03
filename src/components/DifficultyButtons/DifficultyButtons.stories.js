@@ -4,7 +4,6 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 
 import DifficultyButtons from '.';
-import { StoryBookDecorator } from '..';
 
 const props = {
   label: 'Difficulty',
@@ -21,8 +20,7 @@ const actions = {
 };
 
 storiesOf('Difficulty buttons', module)
-  .addDecorator(StoryBookDecorator)
-  .addDecorator(story => <div style={{ width: '100px' }}>{story()}</div>)
+  .addDecorator(story => <div style={{ width: '200px !important' }}>{story()}</div>)
   .add('default', () => <DifficultyButtons {...props} {...actions} />)
   .add('small', () => <DifficultyButtons {...props} {...actions} size="small" />)
   .add('default as 2', () => <DifficultyButtons {...props} {...actions} difficulty={2} />)

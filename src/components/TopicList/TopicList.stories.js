@@ -2,7 +2,6 @@ import React from 'react';
 
 import { storiesOf } from '@storybook/react';
 
-import { StoryBookDecorator } from '..';
 import TopicList from '.';
 
 const topics = [
@@ -33,6 +32,4 @@ const props = {
   topics,
 };
 
-storiesOf('Topic List', module)
-  .addDecorator(StoryBookDecorator)
-  .add('default', () => <TopicList {...props} />);
+storiesOf('Topic List', module).add('default', () => <TopicList {...props} />);
