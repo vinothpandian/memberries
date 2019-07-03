@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
 
 import * as moment from 'moment';
+import sortBy from 'lodash/sortBy';
 
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -10,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 
 const fetchLastReview = (reviews) => {
-  const review = reviews.sort((a, b) => b - a)[reviews.length - 1];
+  const review = sortBy(reviews, 'reviewDate')[reviews.length - 1];
   return moment(review).fromNow();
 };
 
@@ -48,7 +49,12 @@ TopicListItem.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   retention: PropTypes.number.isRequired,
-  lastReviewed: PropTypes.arrayOf(PropTypes.number).isRequired,
+  lastReviewed: PropTypes.arrayOf(
+    PropTypes.shape({
+      reviewDate: PropTypes.number,
+      difficulty: PropTypes.number,
+    }),
+  ).isRequired,
 };
 
 export default TopicListItem;

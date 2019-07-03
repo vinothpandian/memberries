@@ -34,24 +34,24 @@ const ReviewDrawer = (props) => {
   const { db, match } = props;
   const [topic, setTopic] = useState({});
 
-  const { id } = match.params;
+  // const { id } = match.params;
   const classes = useStyles();
 
-  useEffect(() => {
-    async function fetchTopic(topicID) {
-      const fetchedTopic = await db.getTopic(topicID);
-      if (fetchedTopic) {
-        const TopicwithRetention = updateRetentionForATopic(fetchedTopic);
-        setTopic(TopicwithRetention);
-      }
-    }
+  // useEffect(() => {
+  //   async function fetchTopic(topicID) {
+  //     const fetchedTopic = await db.getTopic(topicID);
+  //     if (fetchedTopic) {
+  //       const TopicwithRetention = updateRetentionForATopic(fetchedTopic);
+  //       setTopic(TopicwithRetention);
+  //     }
+  //   }
 
-    fetchTopic(id);
+  //   fetchTopic(id);
 
-    return () => {};
-  }, [db, id]);
+  //   return () => {};
+  // }, [db, id]);
 
-  console.log(id, topic);
+  // console.log(id, topic);
 
   return (
     <Drawer
@@ -64,16 +64,24 @@ const ReviewDrawer = (props) => {
     >
       <div className={classes.toolbar}>
         <Typography className={classes.toolbarTitle} variant="h6" noWrap color="textSecondary">
-          To review
+          Hello
         </Typography>
       </div>
     </Drawer>
   );
 };
 
+ReviewDrawer.defaultProps = {
+  match: {
+    params: {
+      id: 'sljfkd',
+    },
+  },
+};
+
 ReviewDrawer.propTypes = {
   db: PropTypes.instanceOf(Database).isRequired,
-  match: ReactRouterPropTypes.match.isRequired,
+  match: ReactRouterPropTypes.match,
 };
 
 export default compose(
