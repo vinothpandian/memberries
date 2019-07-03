@@ -42,7 +42,7 @@ const MultiTopicGraph = ({ db }) => {
   }, [db]);
 
   return (
-    <ResponsiveContainer width="60%" height={600}>
+    <ResponsiveContainer width="40%" height={450}>
       <LineChart
         data={graphData}
         margin={{

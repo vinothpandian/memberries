@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import * as PropTypes from 'prop-types';
 
 import {
@@ -12,17 +12,45 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-import { DbProps } from '../../db';
+import { makeStyles } from '@material-ui/core/styles';
+import { Database, withDb } from '../../db';
+import { updateRetentionForATopic } from '../../utils';
+import { getGraphDataForATopic } from '../../utils/graph';
 
-const TopicGraph = ({ graphData, projectedData, topic }) => {
-  const data = [...graphData, ...projectedData];
+const useStyles = makeStyles(() => ({}));
 
-  console.log(data);
+const TopicGraph = ({ db, match }) => {
+  const [topic, setTopic] = useState({});
+  const [graphData, setGraphData] = useState([]);
+
+  const { id } = match.params;
+  const classes = useStyles();
+
+  useEffect(() => {
+    async function fetchTopic(topicID) {
+      const fetchedTopic = await db.getTopic(topicID);
+      if (fetchedTopic) {
+        const processedTopic = updateRetentionForATopic(fetchedTopic);
+        const processedGraphData = getGraphDataForATopic(processedTopic);
+        setTopic(processedTopic);
+        setGraphData(processedGraphData);
+      }
+    }
+
+    function resetState() {
+      setTopic([]);
+      setGraphData([]);
+    }
+
+    fetchTopic(id);
+
+    return resetState;
+  }, [db, id]);
 
   return (
-    <ResponsiveContainer width="60%" height={600}>
+    <ResponsiveContainer width="40%" height={450}>
       <LineChart
-        data={data}
+        data={graphData}
         margin={{
           top: 5,
           right: 5,
@@ -38,19 +66,41 @@ const TopicGraph = ({ graphData, projectedData, topic }) => {
           <Label value="Retention" angle={-90} position="insideLeft" />
         </YAxis>
         <Tooltip labelFormatter={value => `Day ${value}`} />
-        <Line unit="%" type="monotone" dataKey="retention" stroke="green" />
-        <Line unit="%" type="monotone" dataKey="projectedRetention" stroke="palevioletred" />
+        <Line
+          unit="%"
+          key={topic.name}
+          type="monotone"
+          stroke="red"
+          dataKey={`Retention of ${topic.id}`}
+        />
+        <Line
+          unit="%"
+          key={topic.id}
+          type="monotone"
+          strokeDasharray="3 3"
+          stroke="blue"
+          dataKey={`Projected Retention of ${topic.id}`}
+        />
       </LineChart>
     </ResponsiveContainer>
   );
 };
 
-TopicGraph.propTypes = {
-  topic: DbProps.topic.isRequired,
-  // eslint-disable-next-line
-  graphData: PropTypes.any,
-  // eslint-disable-next-line
-  projectedData: PropTypes.any,
+TopicGraph.defaultProps = {
+  match: {
+    params: {
+      id: 'c9dC1SXtD',
+    },
+  },
 };
 
-export default TopicGraph;
+TopicGraph.propTypes = {
+  db: PropTypes.instanceOf(Database).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }),
+  }),
+};
+
+export default withDb(TopicGraph);

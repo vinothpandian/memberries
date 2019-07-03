@@ -41,19 +41,7 @@ const defaultData = [
     description: 'redux with react',
     lastReviewed: [
       {
-        reviewDate: 1561801119171,
-        difficulty: 1,
-      },
-      {
         reviewDate: 1561541919171,
-        difficulty: 1,
-      },
-      {
-        reviewDate: 1561369119171,
-        difficulty: 5,
-      },
-      {
-        reviewDate: 1560850719171,
         difficulty: 1,
       },
       {

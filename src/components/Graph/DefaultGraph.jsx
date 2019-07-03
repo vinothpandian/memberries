@@ -35,7 +35,7 @@ const DefaultGraph = () => {
     .filter(v => v['Very easy'] > 10);
 
   return (
-    <ResponsiveContainer width="60%" height={600}>
+    <ResponsiveContainer width="40%" height={450}>
       <ComposedChart data={data}>
         <CartesianGrid stroke="#f5f5f5" />
         <XAxis dataKey="day" />
