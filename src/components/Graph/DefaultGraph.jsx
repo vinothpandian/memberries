@@ -9,10 +9,18 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from 'recharts';
+import { makeStyles } from '@material-ui/core/styles';
 import { calculateRetention } from '../../utils';
 import { colors } from '../../utils/chart';
 
+const useStyles = makeStyles(() => ({
+  fontColor: {
+    color: 'red !important',
+  },
+}));
+
 const DefaultGraph = () => {
+  const classes = useStyles();
   const days = [...Array(100).keys()];
 
   const data = days
@@ -27,13 +35,13 @@ const DefaultGraph = () => {
     .filter(v => v['Very easy'] > 10);
 
   return (
-    <ResponsiveContainer height={600}>
+    <ResponsiveContainer width="60%" height={600}>
       <ComposedChart data={data}>
         <CartesianGrid stroke="#f5f5f5" />
         <XAxis dataKey="day" />
         <YAxis />
         <Tooltip />
-        <Legend />
+        <Legend className={classes.fontColor} />
         <Line type="monotone" dataKey="Very easy" stroke={colors[0]} />
         <Line type="monotone" dataKey="Easy" stroke={colors[1]} />
         <Line type="monotone" dataKey="Medium" stroke={colors[2]} />

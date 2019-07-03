@@ -20,9 +20,8 @@ const TopicGraph = ({ graphData, projectedData, topic }) => {
   console.log(data);
 
   return (
-    <ResponsiveContainer width="80%" aspect={1.8}>
+    <ResponsiveContainer width="60%" height={600}>
       <LineChart
-        style={{ margin: '0 auto' }}
         data={data}
         margin={{
           top: 5,

@@ -3,16 +3,14 @@ import PropTypes from 'prop-types';
 import { ReactRouterPropTypes } from 'react-router-prop-types';
 
 import Drawer from '@material-ui/core/Drawer';
-import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { compose } from 'recompose';
 import { withRouter } from 'react-router';
 import Divider from '@material-ui/core/Divider';
 import { Database, withDb } from '../../db';
-import { updateRetentionForATopic, fetchLastReview } from '../../utils';
-import DifficultyButtons from '../DifficultyButtons/index';
+import { updateRetentionForATopic } from '../../utils';
+
 import LastReviewedGrid from './LastReviewedGrid';
 import RetentionGrid from './RetentionGrid';
 import DrawerToolbar from './DrawerToolbar';
@@ -21,7 +19,7 @@ import ReviewForm from './ReviewForm';
 const drawerWidth = 360;
 const reviewDrawerWidth = 240;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   drawer: {
     width: reviewDrawerWidth,
     flexShrink: 0,

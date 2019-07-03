@@ -18,7 +18,7 @@ const defaultData = [
       },
       {
         reviewDate: 1561541919171,
-        difficulty: 1,
+        difficulty: 5,
       },
       {
         reviewDate: 1561369119171,
@@ -26,7 +26,7 @@ const defaultData = [
       },
       {
         reviewDate: 1560850719171,
-        difficulty: 2,
+        difficulty: 1,
       },
       {
         reviewDate: 1560591519171,
@@ -50,15 +50,15 @@ const defaultData = [
       },
       {
         reviewDate: 1561369119171,
-        difficulty: 2,
+        difficulty: 5,
       },
       {
         reviewDate: 1560850719171,
-        difficulty: 2,
+        difficulty: 1,
       },
       {
         reviewDate: 1560591519171,
-        difficulty: 3,
+        difficulty: 2,
       },
     ],
     difficulty: 4,
@@ -74,20 +74,20 @@ const defaultData = [
         difficulty: 1,
       },
       {
-        reviewDate: 1561541919171,
+        reviewDate: 1561341919171,
+        difficulty: 5,
+      },
+      {
+        reviewDate: 1561569119171,
+        difficulty: 3,
+      },
+      {
+        reviewDate: 1560250719171,
         difficulty: 1,
       },
       {
-        reviewDate: 1561369119171,
+        reviewDate: 1560551519171,
         difficulty: 2,
-      },
-      {
-        reviewDate: 1560850719171,
-        difficulty: 2,
-      },
-      {
-        reviewDate: 1560591519171,
-        difficulty: 3,
       },
     ],
     difficulty: 5,
