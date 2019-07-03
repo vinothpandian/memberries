@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { ReactRouterPropTypes } from 'react-router-prop-types';
+import ReactRouterPropTypes from 'react-router-prop-types';
 
 import Drawer from '@material-ui/core/Drawer';
 import { makeStyles } from '@material-ui/core/styles';
@@ -79,21 +79,12 @@ const ReviewDrawer = (props) => {
   );
 };
 
-ReviewDrawer.defaultProps = {
-  match: {
-    params: {
-      id: 'c9dC1SXtD',
-    },
-  },
-};
-
 ReviewDrawer.propTypes = {
   db: PropTypes.instanceOf(Database).isRequired,
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      id: PropTypes.string,
-    }),
-  }),
+  match: ReactRouterPropTypes.match.isRequired,
 };
 
-export default compose(withDb)(ReviewDrawer);
+export default compose(
+  withDb,
+  withRouter,
+)(ReviewDrawer);

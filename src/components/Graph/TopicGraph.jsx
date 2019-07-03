@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import * as PropTypes from 'prop-types';
+import ReactRouterPropTypes from 'react-router-prop-types';
+
+import { withRouter } from 'react-router';
 
 import {
   LineChart,
@@ -13,6 +16,7 @@ import {
 } from 'recharts';
 
 import { makeStyles } from '@material-ui/core/styles';
+import { compose } from 'recompose';
 import { Database, withDb } from '../../db';
 import { updateRetentionForATopic } from '../../utils';
 import { getGraphDataForATopic } from '../../utils/graph';
@@ -86,21 +90,12 @@ const TopicGraph = ({ db, match }) => {
   );
 };
 
-TopicGraph.defaultProps = {
-  match: {
-    params: {
-      id: 'c9dC1SXtD',
-    },
-  },
-};
-
 TopicGraph.propTypes = {
   db: PropTypes.instanceOf(Database).isRequired,
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      id: PropTypes.string,
-    }),
-  }),
+  match: ReactRouterPropTypes.match.isRequired,
 };
 
-export default withDb(TopicGraph);
+export default compose(
+  withRouter,
+  withDb,
+)(TopicGraph);

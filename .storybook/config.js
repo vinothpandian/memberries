@@ -1,7 +1,8 @@
 // .storybook/config.js
 
 import { configure, addDecorator } from '@storybook/react';
-import { StoryBookDecorator } from '../src/components';
+import StoryBookDecorator from '../src/components/StoryBookDecorator';
+
 import StoryRouter from 'storybook-react-router';
 
 const req = require.context('../src', true, /\.stories.js$/);
