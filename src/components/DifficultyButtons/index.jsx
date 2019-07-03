@@ -17,6 +17,9 @@ const useStyles = makeStyles(theme => ({
   error: {
     marginLeft: -theme.spacing(7),
   },
+  rightLabel: {
+    marginRight: theme.spacing(1),
+  },
 }));
 
 const DifficultyButtons = ({
@@ -56,19 +59,29 @@ const DifficultyButtons = ({
           {label}
         </Typography>
       </Grid>
-      <Grid item>
-        <ToggleButtonGroup
-          name={name}
-          size={size}
-          value={value}
-          exclusive
-          onChange={handleChange}
-          onBlur={() => {
-            handleBlur(name);
-          }}
-        >
-          {buttons}
-        </ToggleButtonGroup>
+      <Grid item container>
+        <Grid item>
+          <ToggleButtonGroup
+            name={name}
+            size={size}
+            value={value}
+            exclusive
+            onChange={handleChange}
+            onBlur={() => {
+              handleBlur(name);
+            }}
+          >
+            {buttons}
+          </ToggleButtonGroup>
+        </Grid>
+        <Grid item container justify="space-between">
+          <Typography variant="overline" color="textPrimary">
+            Very easy
+          </Typography>
+          <Typography className={classes.rightLabel} variant="overline" color="textPrimary">
+            Very hard
+          </Typography>
+        </Grid>
       </Grid>
       <Grid item>
         {error && (

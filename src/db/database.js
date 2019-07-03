@@ -66,7 +66,8 @@ const defaultData = [
   {
     id: 'cYr6DEOpz',
     name: 'Deep learning',
-    description: 'CNN',
+    description:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     lastReviewed: [
       {
         reviewDate: 1561801119171,

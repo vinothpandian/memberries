@@ -16,6 +16,9 @@ const useStyles = makeStyles(theme => ({
   submitButton: {
     marginTop: theme.spacing(3),
   },
+  difficultyButtons: {
+    marginLeft: theme.spacing(1),
+  },
 }));
 
 const Form = ({
@@ -60,7 +63,7 @@ const Form = ({
             helperText={errors.description || ''}
           />
         </Grid>
-        <Grid item xs={8}>
+        <Grid item xs={8} className={classes.difficultyButtons}>
           <DifficultyButtons
             name="difficulty"
             size="small"

@@ -3,13 +3,19 @@ import PropTypes from 'prop-types';
 import { ReactRouterPropTypes } from 'react-router-prop-types';
 
 import Drawer from '@material-ui/core/Drawer';
+import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { compose } from 'recompose';
 import { withRouter } from 'react-router';
+import Divider from '@material-ui/core/Divider';
 import { Database, withDb } from '../../db';
-import { updateRetentionForATopic } from '../../utils';
+import { updateRetentionForATopic, fetchLastReview } from '../../utils';
+import DifficultyButtons from '../DifficultyButtons/index';
+import LastReviewedGrid from './LastReviewedGrid';
+import RetentionGrid from './RetentionGrid';
+import DrawerToolbar from './DrawerToolbar';
 
 const drawerWidth = 360;
 const reviewDrawerWidth = 240;
@@ -23,35 +29,32 @@ const useStyles = makeStyles(theme => ({
     width: reviewDrawerWidth,
     marginRight: drawerWidth,
   },
-  toolbar: theme.mixins.toolbar,
-  toolbarTitle: {
-    marginTop: theme.spacing(3),
-    marginLeft: theme.spacing(2),
-  },
 }));
 
 const ReviewDrawer = (props) => {
   const { db, match } = props;
   const [topic, setTopic] = useState({});
 
-  // const { id } = match.params;
+  const { id } = match.params;
   const classes = useStyles();
 
-  // useEffect(() => {
-  //   async function fetchTopic(topicID) {
-  //     const fetchedTopic = await db.getTopic(topicID);
-  //     if (fetchedTopic) {
-  //       const TopicwithRetention = updateRetentionForATopic(fetchedTopic);
-  //       setTopic(TopicwithRetention);
-  //     }
-  //   }
+  useEffect(() => {
+    async function fetchTopic(topicID) {
+      const fetchedTopic = await db.getTopic(topicID);
+      if (fetchedTopic) {
+        const TopicwithRetention = updateRetentionForATopic(fetchedTopic);
+        setTopic(TopicwithRetention);
+      }
+    }
 
-  //   fetchTopic(id);
+    fetchTopic(id);
 
-  //   return () => {};
-  // }, [db, id]);
+    return () => {};
+  }, [db, id]);
 
-  // console.log(id, topic);
+  const {
+    name, description, lastReviewed, retention, difficulty,
+  } = topic;
 
   return (
     <Drawer
@@ -62,11 +65,13 @@ const ReviewDrawer = (props) => {
       }}
       anchor="right"
     >
-      <div className={classes.toolbar}>
-        <Typography className={classes.toolbarTitle} variant="h6" noWrap color="textSecondary">
-          Hello
-        </Typography>
-      </div>
+      <DrawerToolbar name={name} description={description} />
+      <Divider variant="middle" />
+      <RetentionGrid retention={retention} />
+      <Divider variant="middle" />
+      <LastReviewedGrid lastReviewed={lastReviewed} />
+      <Divider variant="middle" />
+      <Grid container />
     </Drawer>
   );
 };
@@ -74,17 +79,18 @@ const ReviewDrawer = (props) => {
 ReviewDrawer.defaultProps = {
   match: {
     params: {
-      id: 'sljfkd',
+      id: 'cYr6DEOpz',
     },
   },
 };
 
 ReviewDrawer.propTypes = {
   db: PropTypes.instanceOf(Database).isRequired,
-  match: ReactRouterPropTypes.match,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }),
+  }),
 };
 
-export default compose(
-  withDb,
-  withRouter,
-)(ReviewDrawer);
+export default compose(withDb)(ReviewDrawer);

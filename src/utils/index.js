@@ -1,5 +1,6 @@
 import moment from 'moment';
 import _ from 'lodash';
+import sortBy from 'lodash/sortBy';
 
 export const findLastReview = reviewDate => moment(reviewDate).diff(moment(), 'day');
 
@@ -28,3 +29,9 @@ export const randomHex = () => `#${'0123456789abcdef'
   .split('')
   .map((v, i, a) => (i > 5 ? null : a[Math.floor(Math.random() * 16)]))
   .join('')}`;
+
+export const fetchLastReview = (reviews) => {
+  console.log(reviews);
+  const review = sortBy(reviews, 'reviewDate')[reviews.length - 1];
+  return moment(review);
+};

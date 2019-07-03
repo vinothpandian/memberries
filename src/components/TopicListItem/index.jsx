@@ -2,23 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link as RouterLink } from 'react-router-dom';
 
-import * as moment from 'moment';
-import sortBy from 'lodash/sortBy';
-
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-
-const fetchLastReview = (reviews) => {
-  const review = sortBy(reviews, 'reviewDate')[reviews.length - 1];
-  return moment(review).fromNow();
-};
+import { fetchLastReview } from '../../utils';
 
 const TopicListItem = ({
   id, name, retention, lastReviewed,
 }) => {
-  const lastReviewFromNow = lastReviewed ? fetchLastReview(lastReviewed) : '';
+  const lastReviewFromNow = lastReviewed ? fetchLastReview(lastReviewed).fromNow() : '';
 
   const Link = React.forwardRef((itemProps, ref) => (
     <RouterLink to={`/review/${id}`} {...itemProps} ref={ref} />

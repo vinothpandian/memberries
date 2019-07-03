@@ -2,11 +2,9 @@ import React from 'react';
 
 import { storiesOf } from '@storybook/react';
 
-import { MemoryRouter } from 'react-router-dom';
-// import ReviewDrawer from '.';
 import { FullPageGrid } from '..';
 import TopicDrawer from '../TopicDrawer';
-import { DbProvider } from '../../db';
+import ReviewDrawer from '.';
 
 storiesOf('Review Drawer', module)
   .addDecorator(story => (
@@ -15,4 +13,4 @@ storiesOf('Review Drawer', module)
       <TopicDrawer />
     </FullPageGrid>
   ))
-  .add('default', () => <div />);
+  .add('default', () => <ReviewDrawer />);
