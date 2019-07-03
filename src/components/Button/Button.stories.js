@@ -3,7 +3,7 @@ import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { withKnobs, text } from '@storybook/addon-knobs/react';
 
-import StorybookDiv from '..';
+import { StoryBookDecorator } from '..';
 import Button from '.';
 
 export const props = {
@@ -17,7 +17,7 @@ export const actions = {
 };
 
 storiesOf('Button', module)
-  .addDecorator(story => <StorybookDiv>{story()}</StorybookDiv>)
+  .addDecorator(StoryBookDecorator)
   .addDecorator(withKnobs)
   .add('default', () => <Button {...props} {...actions} />)
   .add('colors', () => <Button {...props} color={text('colors', 'secondary')} {...actions} />)
