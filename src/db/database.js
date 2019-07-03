@@ -127,6 +127,16 @@ class Database {
     });
   }
 
+  updateTopic(id, difficulty) {
+    return new Promise((resolve, reject) => {
+      console.log(id, difficulty);
+      if (this.db === 1) {
+        reject();
+      }
+      resolve();
+    });
+  }
+
   getTopic(id) {
     return new Promise((resolve, reject) => {
       const value = this.db

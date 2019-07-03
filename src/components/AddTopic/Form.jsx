@@ -66,7 +66,7 @@ const Form = ({
         <Grid item xs={8} className={classes.difficultyButtons}>
           <DifficultyButtons
             name="difficulty"
-            size="small"
+            size="medium"
             label="Difficulty"
             value={values.difficulty}
             setFieldValue={setFieldValue}

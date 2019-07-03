@@ -16,6 +16,7 @@ import DifficultyButtons from '../DifficultyButtons/index';
 import LastReviewedGrid from './LastReviewedGrid';
 import RetentionGrid from './RetentionGrid';
 import DrawerToolbar from './DrawerToolbar';
+import ReviewForm from './ReviewForm';
 
 const drawerWidth = 360;
 const reviewDrawerWidth = 240;
@@ -56,6 +57,10 @@ const ReviewDrawer = (props) => {
     name, description, lastReviewed, retention, difficulty,
   } = topic;
 
+  const initialValues = {
+    difficulty,
+  };
+
   return (
     <Drawer
       className={classes.drawer}
@@ -71,7 +76,7 @@ const ReviewDrawer = (props) => {
       <Divider variant="middle" />
       <LastReviewedGrid lastReviewed={lastReviewed} />
       <Divider variant="middle" />
-      <Grid container />
+      <ReviewForm id={id} initialValues={initialValues} />
     </Drawer>
   );
 };
@@ -79,7 +84,7 @@ const ReviewDrawer = (props) => {
 ReviewDrawer.defaultProps = {
   match: {
     params: {
-      id: 'cYr6DEOpz',
+      id: 'c9dC1SXtD',
     },
   },
 };

@@ -8,17 +8,11 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
-  label: {
-    marginLeft: theme.spacing(2),
-  },
   container: {
     marginLeft: -theme.spacing(1.5),
   },
   error: {
     marginLeft: -theme.spacing(7),
-  },
-  rightLabel: {
-    marginRight: theme.spacing(1),
   },
 }));
 
@@ -55,7 +49,7 @@ const DifficultyButtons = ({
       className={classes.container}
     >
       <Grid item xs={12} container direction="row" justify="flex-start" alignItems="flex-start">
-        <Typography className={classes.label} align="left" variant="caption" color="textSecondary">
+        <Typography align="left" variant="caption" color="textSecondary">
           {label}
         </Typography>
       </Grid>
@@ -73,14 +67,14 @@ const DifficultyButtons = ({
           >
             {buttons}
           </ToggleButtonGroup>
-        </Grid>
-        <Grid item container justify="space-between">
-          <Typography variant="overline" color="textPrimary">
-            Very easy
-          </Typography>
-          <Typography className={classes.rightLabel} variant="overline" color="textPrimary">
-            Very hard
-          </Typography>
+          <Grid item container justify="space-between">
+            <Typography variant="overline" color="textPrimary">
+              Very easy
+            </Typography>
+            <Typography variant="overline" color="textPrimary">
+              Very hard
+            </Typography>
+          </Grid>
         </Grid>
       </Grid>
       <Grid item>
