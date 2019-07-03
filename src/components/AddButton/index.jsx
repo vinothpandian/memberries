@@ -7,7 +7,9 @@ import AddIcon from '@material-ui/icons/Add';
 
 const useStyles = makeStyles(theme => ({
   fab: {
-    margin: theme.spacing(1),
+    position: 'fixed',
+    bottom: theme.spacing(4),
+    right: theme.spacing(4),
   },
   extendedIcon: {
     marginRight: theme.spacing(1),
@@ -21,10 +23,10 @@ const AddButton = () => {
 
   return (
     <Fab
+      aria-label="Add"
       className={classes.fab}
       variant="extended"
       color="secondary"
-      aria-label="Delete"
       component={RouterLink}
       to="/add"
     >

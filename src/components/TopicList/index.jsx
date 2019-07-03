@@ -1,25 +1,38 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import List from '@material-ui/core/List';
 import TopicListItem from '../TopicListItem';
+import { withDb, Database } from '../../db';
 
-const TopicList = ({ topics }) => (
-  <List>
-    {topics.map(topic => (
-      <TopicListItem key={topic.id} {...topic} />
-    ))}
-  </List>
-);
+import { updateRetentionForTopics } from '../../utils';
 
-TopicList.propTypes = {
-  topics: PropTypes.arrayOf({
-    id: PropTypes.string.isRequired,
-    retention: PropTypes.number.isRequired,
-    topicName: PropTypes.string.isRequired,
-    lastReviewed: PropTypes.string.isRequired,
-    to: PropTypes.string.isRequired,
-  }).isRequired,
+const TopicList = ({ db }) => {
+  const [topics, setTopics] = useState([]);
+
+  useEffect(() => {
+    function fetchAll() {
+      const fetchedTopics = db.getTopics();
+      const topicsWithRetention = updateRetentionForTopics(fetchedTopics);
+      setTopics(topicsWithRetention);
+    }
+
+    fetchAll();
+
+    return () => {};
+  }, [db]);
+
+  return (
+    <List>
+      {topics.map(topic => (
+        <TopicListItem key={topic.id} {...topic} />
+      ))}
+    </List>
+  );
 };
 
-export default TopicList;
+TopicList.propTypes = {
+  db: PropTypes.instanceOf(Database).isRequired,
+};
+
+export default withDb(TopicList);

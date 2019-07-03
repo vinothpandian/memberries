@@ -4,6 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
 import TopicList from '../TopicList';
+import AddButton from '../AddButton';
 
 const drawerWidth = 360;
 
@@ -190,6 +191,7 @@ const TopicDrawer = () => {
         </Typography>
       </div>
       <TopicList topics={topics} />
+      <AddButton />
     </Drawer>
   );
 };

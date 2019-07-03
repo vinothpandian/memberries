@@ -6,12 +6,13 @@ import { StoryBookDecorator } from '..';
 import TopicListItem from '.';
 
 export const props = {
-  retention: 77,
-  topicName: 'React',
-  lastReviewed: '8 days ago',
+  retention: 77.45,
+  name: 'React',
+  lastReviewed: [Date.now()],
   to: '/review/react',
 };
 
 storiesOf('Topic List Item', module)
   .addDecorator(StoryBookDecorator)
-  .add('default', () => <TopicListItem {...props} />);
+  .add('default', () => <TopicListItem {...props} />)
+  .add('float retention', () => <TopicListItem {...props} retention={84.44343434} />);

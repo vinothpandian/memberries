@@ -22,7 +22,7 @@ export const updateRetentionForATopic = (topic) => {
   };
 };
 
-export const updateRetention = topics => topics.map(updateRetentionForATopic);
+export const updateRetentionForTopics = topics => topics.map(updateRetentionForATopic);
 
 export const randomHex = () => `#${'0123456789abcdef'
   .split('')
