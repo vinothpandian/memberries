@@ -6,11 +6,98 @@ import lastReviewed from './testcase';
 
 const adapter = new LocalStorage('db');
 
+const defaultData = [
+  {
+    id: 'oaJwnzK1s',
+    name: 'Storybook',
+    description: 'storybook basix',
+    lastReviewed: [
+      {
+        reviewDate: 1561801119171,
+        difficulty: 1,
+      },
+      {
+        reviewDate: 1561541919171,
+        difficulty: 1,
+      },
+      {
+        reviewDate: 1561369119171,
+        difficulty: 2,
+      },
+      {
+        reviewDate: 1560850719171,
+        difficulty: 2,
+      },
+      {
+        reviewDate: 1560591519171,
+        difficulty: 3,
+      },
+    ],
+    difficulty: 1,
+  },
+  {
+    id: 'c9dC1SXtD',
+    name: 'Redux',
+    description: 'redux with react',
+    lastReviewed: [
+      {
+        reviewDate: 1561801119171,
+        difficulty: 1,
+      },
+      {
+        reviewDate: 1561541919171,
+        difficulty: 1,
+      },
+      {
+        reviewDate: 1561369119171,
+        difficulty: 2,
+      },
+      {
+        reviewDate: 1560850719171,
+        difficulty: 2,
+      },
+      {
+        reviewDate: 1560591519171,
+        difficulty: 3,
+      },
+    ],
+    difficulty: 4,
+  },
+  {
+    id: 'cYr6DEOpz',
+    name: 'Deep learning',
+    description: 'CNN',
+    lastReviewed: [
+      {
+        reviewDate: 1561801119171,
+        difficulty: 1,
+      },
+      {
+        reviewDate: 1561541919171,
+        difficulty: 1,
+      },
+      {
+        reviewDate: 1561369119171,
+        difficulty: 2,
+      },
+      {
+        reviewDate: 1560850719171,
+        difficulty: 2,
+      },
+      {
+        reviewDate: 1560591519171,
+        difficulty: 3,
+      },
+    ],
+    difficulty: 5,
+  },
+];
+
 class Database {
   constructor() {
     this.db = low(adapter);
 
-    this.db.defaults({ topics: [] }).write();
+    this.db.defaults({ topics: defaultData }).write();
   }
 
   pushTopic(name, description, difficulty) {

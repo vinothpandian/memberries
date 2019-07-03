@@ -1,11 +1,8 @@
 import React from 'react';
-import { MemoryRouter } from 'react-router-dom';
 
 import { storiesOf } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
-import { withKnobs, text } from '@storybook/addon-knobs/react';
 
-import StorybookDiv from '..';
+import { StoryBookDecorator } from '..';
 import TopicList from '.';
 
 const topics = [
@@ -37,10 +34,5 @@ const props = {
 };
 
 storiesOf('Topic List', module)
-  .addDecorator(story => (
-    <MemoryRouter initialEntries={['/']}>
-      <StorybookDiv>{story()}</StorybookDiv>
-    </MemoryRouter>
-  ))
-  .addDecorator(withKnobs)
+  .addDecorator(StoryBookDecorator)
   .add('default', () => <TopicList {...props} />);
