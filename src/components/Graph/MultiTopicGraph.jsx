@@ -42,7 +42,7 @@ const MultiTopicGraph = ({ db }) => {
   }, [db]);
 
   return (
-    <ResponsiveContainer width="80%" height={550}>
+    <ResponsiveContainer width="60%" height={500}>
       <LineChart
         data={graphData}
         margin={{
@@ -61,14 +61,12 @@ const MultiTopicGraph = ({ db }) => {
         </YAxis>
         <Tooltip
           labelFormatter={value => (value === 'Today' ? 'Today' : `Day ${value}`)}
-          formatter={(value, name, props) => {
-            console.log(props);
-            return name.includes('Projected')
-              ? [value, 'Projected Retention']
-              : [value, 'Retention'];
-          }}
+          formatter={(value, name) => (name.includes('Projected') ? [value, 'Projected Retention'] : [value, 'Retention'])
+          }
         />
-        <ReferenceLine x="Today" stroke="gray" />
+        <ReferenceLine x="Today" stroke="gray">
+          <Label value="Today" angle={-90} position="insideRight" offset={12} />
+        </ReferenceLine>
         {topics.map(topic => (
           <Line
             unit="%"

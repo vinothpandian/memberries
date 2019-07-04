@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
-import { findRecentReview } from '../../utils';
+import { findRecentReview } from '../../utils/date';
 import ColorAvatar from '../ColorAvatar';
 
 const TopicListItem = ({

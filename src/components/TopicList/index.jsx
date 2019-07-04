@@ -5,7 +5,7 @@ import List from '@material-ui/core/List';
 import TopicListItem from '../TopicListItem';
 import { withDb, Database } from '../../db';
 
-import { updateRetentionForTopics } from '../../utils';
+import { updateRetentionForTopics } from '../../utils/retention';
 
 const TopicList = ({ db }) => {
   const [topics, setTopics] = useState([]);

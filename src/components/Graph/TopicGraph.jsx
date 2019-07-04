@@ -29,7 +29,7 @@ const TopicGraph = ({ db, match, type }) => {
 
   useEffect(() => {
     async function fetchTopic(topicID) {
-      const fetchedTopic = await db.getTopic('oaJwnzK1s');
+      const fetchedTopic = await db.getTopic(topicID);
       if (fetchedTopic) {
         const processedTopic = updateRetentionForATopic(fetchedTopic);
         const processedGraphData = getGraphDataForATopic(processedTopic);
@@ -49,7 +49,7 @@ const TopicGraph = ({ db, match, type }) => {
   }, [db, id]);
 
   return (
-    <ResponsiveContainer width="50%" height={450}>
+    <ResponsiveContainer width="60%" height={500}>
       <LineChart
         data={graphData}
         margin={{
@@ -72,7 +72,7 @@ const TopicGraph = ({ db, match, type }) => {
           }
         />
         <ReferenceLine x="Today">
-          <Label value="Today" angle={-90} position="insideLeft" />
+          <Label value="Today" angle={-90} position="insideRight" offset={12} />
         </ReferenceLine>
         <Line
           unit="%"

@@ -10,7 +10,7 @@ import { withRouter } from 'react-router';
 import Divider from '@material-ui/core/Divider';
 import isEmpty from 'lodash/isEmpty';
 import { Database, withDb } from '../../db';
-import { updateRetentionForATopic } from '../../utils';
+import { updateRetentionForATopic } from '../../utils/retention';
 
 import LastReviewedGrid from './LastReviewedGrid';
 import RetentionGrid from './RetentionGrid';
@@ -41,7 +41,7 @@ const ReviewDrawer = (props) => {
 
   useEffect(() => {
     async function fetchTopic(topicID) {
-      const fetchedTopic = await db.getTopic('oaJwnzK1s');
+      const fetchedTopic = await db.getTopic(topicID);
       if (fetchedTopic) {
         const TopicwithRetention = updateRetentionForATopic(fetchedTopic);
         setTopic(TopicwithRetention);

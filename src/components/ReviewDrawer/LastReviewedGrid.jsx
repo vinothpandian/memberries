@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-import { findRecentReview } from '../../utils';
+import { findRecentReview } from '../../utils/date';
 
 const useStyles = makeStyles(theme => ({
   grid: {
