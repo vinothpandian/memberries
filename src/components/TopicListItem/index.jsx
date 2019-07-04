@@ -6,10 +6,13 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+
 import { fetchLastReview } from '../../utils';
+import ColorAvatar from '../ColorAvatar';
 
 const TopicListItem = ({
-  id, name, retention, lastReviewed,
+  id, name, retention, lastReviewed, color,
 }) => {
   const lastReviewFromNow = lastReviewed ? fetchLastReview(lastReviewed).fromNow() : '';
 
@@ -30,7 +33,10 @@ const TopicListItem = ({
 
   return (
     <React.Fragment>
-      <ListItem button component={Link} alignItems="flex-start">
+      <ListItem button component={Link} alignItems="center">
+        <ListItemAvatar>
+          <ColorAvatar color={color} />
+        </ListItemAvatar>
         <ListItemText primary={PrimaryText} secondary={`Reviewed ${lastReviewFromNow}`} />
       </ListItem>
       <Divider variant="fullWidth" />
@@ -48,6 +54,7 @@ TopicListItem.propTypes = {
       difficulty: PropTypes.number,
     }),
   ).isRequired,
+  color: PropTypes.string.isRequired,
 };
 
 export default TopicListItem;

@@ -30,6 +30,7 @@ export const props = {
       difficulty: 3,
     },
   ],
+  color: '#FF33E3',
 };
 
 storiesOf('Topic List Item', module)

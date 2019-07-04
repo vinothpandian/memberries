@@ -61,22 +61,25 @@ const MultiTopicGraph = ({ db }) => {
         </YAxis>
         <Tooltip labelFormatter={value => `Day ${value}`} />
         {/* <ReferenceLine x="5" stroke="gray" label="Today" /> */}
-        {topics.map(topic => (
-          <Line
-            unit="%"
-            key={topic.name}
-            type="monotone"
-            stroke={randomHex()}
-            dataKey={`Retention of ${topic.id}`}
-          />
-        ))}
+        {topics.map((topic) => {
+          console.log(topic.color);
+          return (
+            <Line
+              unit="%"
+              key={topic.name}
+              type="monotone"
+              stroke={topic.color}
+              dataKey={`Retention of ${topic.id}`}
+            />
+          );
+        })}
         {topics.map(topic => (
           <Line
             unit="%"
             key={topic.id}
             type="monotone"
             strokeDasharray="3 3"
-            stroke="blue"
+            stroke={topic.color}
             dataKey={`Projected Retention of ${topic.id}`}
           />
         ))}

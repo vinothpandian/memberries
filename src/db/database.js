@@ -65,19 +65,7 @@ const defaultData = [
         difficulty: 1,
       },
       {
-        reviewDate: 1561341919171,
-        difficulty: 5,
-      },
-      {
-        reviewDate: 1561569119171,
-        difficulty: 3,
-      },
-      {
-        reviewDate: 1560250719171,
-        difficulty: 1,
-      },
-      {
-        reviewDate: 1560551519171,
+        reviewDate: Date.now().valueOf(),
         difficulty: 2,
       },
     ],
@@ -123,19 +111,30 @@ class Database {
 
   updateTopic(id, difficulty) {
     return new Promise((resolve, reject) => {
-      console.log(id, difficulty);
-
-      const lastReviewed = this.db
+      const topic = this.db
         .get('topics')
         .find({ id })
-        .map('lastReviewed')
         .value();
 
-      console.log(lastReviewed);
+      if (!topic) reject(new Error('Topic not found'));
 
-      if (this.db === 1) {
-        reject();
-      }
+      const { lastReviewed: reviews } = topic;
+      if (!reviews) reject(new Error('Topic is missing data'));
+
+      this.db
+        .get('topics')
+        .find({ id })
+        .assign({
+          lastReviewed: [
+            ...reviews,
+            {
+              reviewDate: Date.now(),
+              difficulty,
+            },
+          ],
+        })
+        .write();
+
       resolve();
     });
   }
