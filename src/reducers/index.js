@@ -1,11 +1,11 @@
 import { randomColor } from 'randomcolor';
 import { handleActions } from 'redux-actions';
-import { Map } from 'immutable';
+
 import {
   FETCH_TOPIC, FETCH_TOPICS, ADD_TOPIC, UPDATE_TOPIC,
-} from '../constants/index';
+} from '../constants';
 
-const defaultState = new Map({
+const defaultState = {
   topics: [
     {
       id: 'oaJwnzK1s',
@@ -60,13 +60,10 @@ const defaultState = new Map({
       color: randomColor({ luminosity: 'bright' }),
     },
   ],
-});
+};
 
 const fetchTopic = (state, action) => state;
-const fetchTopics = (state, action) => {
-  console.log(action);
-  return state;
-};
+const fetchTopics = (state, action) => state;
 const addTopic = (state, action) => state;
 const updateTopic = (state, action) => state;
 

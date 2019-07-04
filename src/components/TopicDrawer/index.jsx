@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import TopicList from '../TopicList';
 import AddButton from '../AddButton';
+import { DbProps } from '../../db';
 
 const drawerWidth = 360;
 
@@ -23,7 +24,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const TopicDrawer = () => {
+const TopicDrawer = ({ topics }) => {
   const classes = useStyles();
 
   return (
@@ -40,10 +41,14 @@ const TopicDrawer = () => {
           To review
         </Typography>
       </div>
-      <TopicList />
+      <TopicList topics={topics} />
       <AddButton />
     </Drawer>
   );
+};
+
+TopicDrawer.propTypes = {
+  topics: DbProps.topics.isRequired,
 };
 
 export default TopicDrawer;

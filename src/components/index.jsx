@@ -10,6 +10,7 @@ export const FullPageGrid = styled(Grid)`
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 `;
 
 export default StorybookDiv;

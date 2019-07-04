@@ -116,8 +116,6 @@ class Database {
 
       if (isSameDay) reject(new Error('You reviewed this already for today!'));
 
-      console.log(isSameDay);
-
       this.db
         .get('topics')
         .find({ id })

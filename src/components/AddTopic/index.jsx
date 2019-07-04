@@ -3,7 +3,9 @@ import Drawer from '@material-ui/core/Drawer';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
+import Grid from '@material-ui/core/Grid';
 import FormikForm from './FormikForm';
+import CloseButton from '../CloseButton/index';
 
 const drawerWidth = 360;
 
@@ -35,9 +37,12 @@ const AddTopic = () => {
       anchor="right"
     >
       <div className={classes.toolbar}>
-        <Typography className={classes.toolbarTitle} variant="h6" noWrap color="textSecondary">
-          What did you learn?
-        </Typography>
+        <Grid container justify="space-between" alignItems="baseline">
+          <Typography className={classes.toolbarTitle} variant="h6" noWrap color="textSecondary">
+            What did you learn?
+          </Typography>
+          <CloseButton to="/" />
+        </Grid>
       </div>
       <FormikForm />
     </Drawer>

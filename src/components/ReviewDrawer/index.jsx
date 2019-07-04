@@ -1,16 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import ReactRouterPropTypes from 'react-router-prop-types';
+import React from 'react';
 
 import Drawer from '@material-ui/core/Drawer';
 import { makeStyles } from '@material-ui/core/styles';
 
-import { compose } from 'recompose';
-import { withRouter } from 'react-router';
 import Divider from '@material-ui/core/Divider';
 import isEmpty from 'lodash/isEmpty';
-import { Database, withDb } from '../../db';
-import { updateRetentionForATopic } from '../../utils/retention';
+import { DbProps } from '../../db';
 
 import LastReviewedGrid from './LastReviewedGrid';
 import RetentionGrid from './RetentionGrid';
@@ -32,29 +27,11 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const ReviewDrawer = (props) => {
-  const { db, match } = props;
-  const [topic, setTopic] = useState({});
-
-  const { id } = match.params;
+const ReviewDrawer = ({ topic }) => {
   const classes = useStyles();
 
-  useEffect(() => {
-    async function fetchTopic(topicID) {
-      const fetchedTopic = await db.getTopic(topicID);
-      if (fetchedTopic) {
-        const TopicwithRetention = updateRetentionForATopic(fetchedTopic);
-        setTopic(TopicwithRetention);
-      }
-    }
-
-    fetchTopic(id);
-
-    return () => {};
-  }, [db, id]);
-
   const {
-    name, description, lastReviewed, retention, difficulty,
+    id, name, description, lastReviewed, retention, difficulty,
   } = topic;
 
   const initialValues = {
@@ -84,11 +61,7 @@ const ReviewDrawer = (props) => {
 };
 
 ReviewDrawer.propTypes = {
-  db: PropTypes.instanceOf(Database).isRequired,
-  match: ReactRouterPropTypes.match.isRequired,
+  topic: DbProps.topic.isRequired,
 };
 
-export default compose(
-  withDb,
-  withRouter,
-)(ReviewDrawer);
+export default ReviewDrawer;

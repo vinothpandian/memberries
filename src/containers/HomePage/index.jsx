@@ -1,37 +1,37 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { shallowEqual, useSelector, useDispatch } from 'react-redux';
+import { shallowEqual, useSelector } from 'react-redux';
 import Appbar from '../../components/Appbar';
 import TopicDrawer from '../../components/TopicDrawer';
-import AddTopic from '../../components/AddTopic';
-import { MultiTopicGraph, TopicGraph } from '../../components/Graph';
 import { FullPageGrid } from '../../components';
-import ReviewDrawer from '../../components/ReviewDrawer';
-import OverviewDrawer from '../../components/OverviewDrawer';
-import { FETCH_TOPIC, FETCH_TOPICS } from '../../constants/index';
+import SingleTopic from '../SingleTopic';
+
+import { updateRetentionForTopics } from '../../utils/retention';
+import { getGraphDataForAllTopics } from '../../utils/graph';
+import AllTopics from '../AllTopics';
+import AddTopic from '../../components/AddTopic';
 
 const HomePage = () => {
-  const topics = useSelector(state => state.get('topics'), shallowEqual);
-  const dispatch = useDispatch();
+  const fetchedTopics = useSelector(state => state.topics, shallowEqual);
+  const topics = updateRetentionForTopics(fetchedTopics);
+  const graphData = getGraphDataForAllTopics(topics);
 
-  console.log('TOPICS', topics);
-  dispatch({ type: FETCH_TOPICS });
+  if (!topics) return null;
 
   return (
     <React.Fragment>
       <Appbar />
       <FullPageGrid>
         <Switch>
-          <Route exact path="/" component={MultiTopicGraph} />
-          <Route path="/review/:id" component={TopicGraph} />
+          <Route path="/review/:id" render={props => <SingleTopic {...props} topics={topics} />} />
+          <Route
+            path="/"
+            render={props => <AllTopics {...props} topics={topics} graphData={graphData} />}
+          />
         </Switch>
         <Switch>
-          <Route exact path="/" component={OverviewDrawer} />
-          <Route path="/review/:id" component={ReviewDrawer} />
-        </Switch>
-        <Switch>
-          <Route exact path="/" component={TopicDrawer} />
           <Route path="/add" component={AddTopic} />
+          <Route path="/" render={props => <TopicDrawer {...props} topics={topics} />} />
         </Switch>
       </FullPageGrid>
     </React.Fragment>
