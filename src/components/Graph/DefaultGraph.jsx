@@ -10,8 +10,10 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import { makeStyles } from '@material-ui/core/styles';
-import { calculateRetention } from '../../utils';
-import { colors } from '../../utils/chart';
+import randomColor from 'randomcolor';
+import { calculateRetention } from '../../utils/retention';
+
+const colors = randomColor({ count: 5, seed: 2 });
 
 const useStyles = makeStyles(() => ({
   fontColor: {

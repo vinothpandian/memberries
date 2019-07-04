@@ -15,20 +15,16 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 
-import { makeStyles } from '@material-ui/core/styles';
 import { compose } from 'recompose';
 import { Database, withDb } from '../../db';
-import { updateRetentionForATopic } from '../../utils';
+import { updateRetentionForATopic } from '../../utils/retention';
 import { getGraphDataForATopic } from '../../utils/graph';
-
-const useStyles = makeStyles(() => ({}));
 
 const TopicGraph = ({ db, match }) => {
   const [topic, setTopic] = useState({});
   const [graphData, setGraphData] = useState([]);
 
   const { id } = match.params;
-  const classes = useStyles();
 
   useEffect(() => {
     async function fetchTopic(topicID) {
@@ -74,7 +70,7 @@ const TopicGraph = ({ db, match }) => {
           unit="%"
           key={topic.name}
           type="monotone"
-          stroke="red"
+          stroke={topic.color}
           dataKey={`Retention of ${topic.id}`}
         />
         <Line
@@ -82,7 +78,7 @@ const TopicGraph = ({ db, match }) => {
           key={topic.id}
           type="monotone"
           strokeDasharray="3 3"
-          stroke="blue"
+          stroke={topic.color}
           dataKey={`Projected Retention of ${topic.id}`}
         />
       </LineChart>

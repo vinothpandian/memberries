@@ -12,7 +12,7 @@ import {
   ResponsiveContainer,
   ReferenceLine,
 } from 'recharts';
-import { randomHex, updateRetentionForTopics } from '../../utils';
+import { updateRetentionForTopics } from '../../utils/retention';
 import withDb from '../../db/withDb';
 import Database from '../../db/database';
 import { getGraphDataForAllTopics } from '../../utils/graph';

@@ -2,8 +2,7 @@ import moment from 'moment';
 import sortBy from 'lodash/sortBy';
 import range from 'lodash/range';
 import merge from 'lodash/merge';
-
-import { calculateRetention } from '.';
+import { calculateRetention } from './retention';
 
 const getGraphDataForATopic = (topic) => {
   let { lastReviewed } = topic;
