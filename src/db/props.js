@@ -11,6 +11,7 @@ export const topic = PropTypes.shape({
     }),
   ),
   difficulty: PropTypes.number,
+  color: PropTypes.string.isRequired,
 });
 
 export const topics = PropTypes.arrayOf(topic);

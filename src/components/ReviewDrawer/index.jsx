@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { compose } from 'recompose';
 import { withRouter } from 'react-router';
 import Divider from '@material-ui/core/Divider';
+import isEmpty from 'lodash/isEmpty';
 import { Database, withDb } from '../../db';
 import { updateRetentionForATopic } from '../../utils';
 
@@ -27,6 +28,7 @@ const useStyles = makeStyles(() => ({
   drawerPaper: {
     width: reviewDrawerWidth,
     marginRight: drawerWidth,
+    overflowX: 'hidden',
   },
 }));
 
@@ -58,6 +60,8 @@ const ReviewDrawer = (props) => {
   const initialValues = {
     difficulty,
   };
+
+  if (isEmpty(topic)) return null;
 
   return (
     <Drawer

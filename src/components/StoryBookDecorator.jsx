@@ -9,7 +9,7 @@ const StoryBookDecorator = story => (
     <CssBaseline />
     <MemoryRouter initialEntries={['/']}>
       {story()}
-      <Routes />
+      {/* <Routes /> */}
     </MemoryRouter>
   </DbProvider>
 );

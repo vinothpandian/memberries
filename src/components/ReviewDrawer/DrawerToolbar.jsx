@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import { makeStyles } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import CloseButton from '../CloseButton';
 
 const useStyles = makeStyles(theme => ({
   toolbar: theme.mixins.toolbar,
@@ -21,9 +23,12 @@ const DrawerToolbar = ({ name, description }) => {
 
   return (
     <div className={classes.toolbar}>
-      <Typography className={classes.name} variant="h5">
-        {name}
-      </Typography>
+      <Grid container justify="space-between" alignItems="baseline">
+        <Typography className={classes.name} variant="h5">
+          {name}
+        </Typography>
+        <CloseButton to="/" />
+      </Grid>
       <Typography
         className={classes.description}
         variant="body2"

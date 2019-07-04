@@ -1,6 +1,7 @@
 import low from 'lowdb';
 import LocalStorage from 'lowdb/adapters/LocalStorage';
 import shortid from 'shortid';
+import * as randomColor from 'randomcolor';
 
 import lastReviewed from './testcase';
 
@@ -34,6 +35,7 @@ const defaultData = [
       },
     ],
     difficulty: 1,
+    color: randomColor({ luminosity: 'bright' }),
   },
   {
     id: 'c9dC1SXtD',
@@ -50,6 +52,7 @@ const defaultData = [
       },
     ],
     difficulty: 4,
+    color: randomColor({ luminosity: 'bright' }),
   },
   {
     id: 'cYr6DEOpz',
@@ -79,6 +82,7 @@ const defaultData = [
       },
     ],
     difficulty: 5,
+    color: randomColor({ luminosity: 'bright' }),
   },
 ];
 
@@ -92,6 +96,7 @@ class Database {
   pushTopic(name, description, difficulty) {
     return new Promise((resolve, reject) => {
       const id = shortid.generate();
+      const color = randomColor({ luminosity: 'bright' });
 
       this.db
         .get('topics')
@@ -101,6 +106,7 @@ class Database {
           description,
           lastReviewed,
           difficulty,
+          color,
         })
         .write();
 
@@ -118,6 +124,15 @@ class Database {
   updateTopic(id, difficulty) {
     return new Promise((resolve, reject) => {
       console.log(id, difficulty);
+
+      const lastReviewed = this.db
+        .get('topics')
+        .find({ id })
+        .map('lastReviewed')
+        .value();
+
+      console.log(lastReviewed);
+
       if (this.db === 1) {
         reject();
       }

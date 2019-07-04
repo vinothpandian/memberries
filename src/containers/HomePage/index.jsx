@@ -3,14 +3,23 @@ import { Switch, Route } from 'react-router-dom';
 import Appbar from '../../components/Appbar';
 import TopicDrawer from '../../components/TopicDrawer';
 import AddTopic from '../../components/AddTopic';
-import { MultiTopicGraph } from '../../components/Graph';
+import { MultiTopicGraph, TopicGraph } from '../../components/Graph';
 import { FullPageGrid } from '../../components';
+import ReviewDrawer from '../../components/ReviewDrawer';
+import OverviewDrawer from '../../components/OverviewDrawer';
 
 const HomePage = () => (
   <React.Fragment>
     <Appbar />
     <FullPageGrid>
-      <MultiTopicGraph />
+      <Switch>
+        <Route exact path="/" component={MultiTopicGraph} />
+        <Route path="/review/:id" component={TopicGraph} />
+      </Switch>
+      <Switch>
+        <Route exact path="/" component={OverviewDrawer} />
+        <Route path="/review/:id" component={ReviewDrawer} />
+      </Switch>
       <Switch>
         <Route exact path="/" component={TopicDrawer} />
         <Route path="/add" component={AddTopic} />

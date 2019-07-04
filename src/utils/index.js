@@ -31,7 +31,6 @@ export const randomHex = () => `#${'0123456789abcdef'
   .join('')}`;
 
 export const fetchLastReview = (reviews) => {
-  console.log(reviews);
   const review = sortBy(reviews, 'reviewDate')[reviews.length - 1];
   return moment(review);
 };

@@ -43,6 +43,7 @@ const ReviewForm = ({
 
   return (
     <Formik
+      enableReinitialize
       validationSchema={schema}
       initialValues={initialValues}
       onSubmit={async (values) => {
@@ -66,7 +67,7 @@ const ReviewForm = ({
                 name="difficulty"
                 size="small"
                 label="Review Difficulty"
-                value={values.difficulty || 3}
+                value={values.difficulty}
                 setFieldValue={setFieldValue}
                 handleBlur={handleBlur}
                 error={!!errors.difficulty && !!touched.difficulty}
@@ -88,19 +89,13 @@ const ReviewForm = ({
   );
 };
 
-ReviewForm.defaultProps = {
-  initialValues: {
-    difficulty: 3,
-  },
-};
-
 ReviewForm.propTypes = {
   db: PropTypes.instanceOf(Database).isRequired,
   history: ReactRouterPropTypes.history.isRequired,
   id: PropTypes.string.isRequired,
   initialValues: PropTypes.shape({
     difficulty: PropTypes.number,
-  }),
+  }).isRequired,
 };
 
 export default compose(

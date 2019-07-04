@@ -10,10 +10,12 @@ import Routes from './routes';
 function App() {
   return (
     <DbProvider>
-      <CssBaseline />
-      <Router>
-        <Routes />
-      </Router>
+      <React.Fragment>
+        <CssBaseline />
+        <Router>
+          <Routes />
+        </Router>
+      </React.Fragment>
     </DbProvider>
   );
 }
