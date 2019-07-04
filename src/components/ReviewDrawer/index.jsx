@@ -41,7 +41,7 @@ const ReviewDrawer = (props) => {
 
   useEffect(() => {
     async function fetchTopic(topicID) {
-      const fetchedTopic = await db.getTopic(topicID);
+      const fetchedTopic = await db.getTopic('oaJwnzK1s');
       if (fetchedTopic) {
         const TopicwithRetention = updateRetentionForATopic(fetchedTopic);
         setTopic(TopicwithRetention);

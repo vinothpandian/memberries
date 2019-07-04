@@ -8,13 +8,15 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
-import { fetchLastReview } from '../../utils';
+import { findRecentReview } from '../../utils';
 import ColorAvatar from '../ColorAvatar';
 
 const TopicListItem = ({
   id, name, retention, lastReviewed, color,
 }) => {
-  const lastReviewFromNow = lastReviewed ? fetchLastReview(lastReviewed).fromNow() : '';
+  const lastReviewFromNow = lastReviewed
+    ? findRecentReview(lastReviewed, { asMoment: true }).fromNow()
+    : '';
 
   const Link = React.forwardRef((itemProps, ref) => (
     <RouterLink to={`/review/${id}`} {...itemProps} ref={ref} />

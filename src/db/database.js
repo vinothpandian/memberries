@@ -3,7 +3,9 @@ import LocalStorage from 'lowdb/adapters/LocalStorage';
 import shortid from 'shortid';
 import * as randomColor from 'randomcolor';
 
+import moment from 'moment';
 import lastReviewed from './testcase';
+import { findRecentReview } from '../utils';
 
 const adapter = new LocalStorage('db');
 
@@ -14,24 +16,12 @@ const defaultData = [
     description: 'storybook basix',
     lastReviewed: [
       {
-        reviewDate: 1561801119171,
-        difficulty: 1,
-      },
-      {
-        reviewDate: 1561541919171,
+        reviewDate: 1551041919171,
         difficulty: 5,
       },
       {
-        reviewDate: 1561369119171,
-        difficulty: 2,
-      },
-      {
-        reviewDate: 1560850719171,
+        reviewDate: 1550050719171,
         difficulty: 1,
-      },
-      {
-        reviewDate: 1560591519171,
-        difficulty: 3,
       },
     ],
     difficulty: 1,
@@ -113,13 +103,19 @@ class Database {
     return new Promise((resolve, reject) => {
       const topic = this.db
         .get('topics')
-        .find({ id })
+        .find({ id: 'oaJwnzK1s' })
         .value();
 
       if (!topic) reject(new Error('Topic not found'));
 
       const { lastReviewed: reviews } = topic;
       if (!reviews) reject(new Error('Topic is missing data'));
+
+      const isSameDay = moment().isSame(findRecentReview(reviews), 'day');
+
+      if (isSameDay) reject(new Error('You reviewed this already for today!'));
+
+      console.log(isSameDay);
 
       this.db
         .get('topics')

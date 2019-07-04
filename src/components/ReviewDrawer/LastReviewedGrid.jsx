@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-import { fetchLastReview } from '../../utils';
+import { findRecentReview } from '../../utils';
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -25,7 +25,9 @@ const LastReviewedGrid = ({ lastReviewed }) => {
       </Grid>
       <Grid item>
         <Typography variant="h5">
-          {lastReviewed ? fetchLastReview(lastReviewed).format('MMM Do YYYY') : ''}
+          {lastReviewed
+            ? findRecentReview(lastReviewed, { asMoment: true }).format('MMM Do YYYY')
+            : ''}
         </Typography>
       </Grid>
     </Grid>

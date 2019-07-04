@@ -32,7 +32,7 @@ const TopicGraph = ({ db, match }) => {
 
   useEffect(() => {
     async function fetchTopic(topicID) {
-      const fetchedTopic = await db.getTopic(topicID);
+      const fetchedTopic = await db.getTopic('oaJwnzK1s');
       if (fetchedTopic) {
         const processedTopic = updateRetentionForATopic(fetchedTopic);
         const processedGraphData = getGraphDataForATopic(processedTopic);

@@ -4,6 +4,16 @@ import sortBy from 'lodash/sortBy';
 
 export const findLastReview = reviewDate => moment(reviewDate).diff(moment(), 'day');
 
+export const findRecentReview = (reviews, asMoment = false) => {
+  const { reviewDate } = _.last(_.sortBy(reviews, 'reviewDate'));
+
+  if (asMoment) {
+    return moment(reviewDate);
+  }
+
+  return reviewDate;
+};
+
 export const calculateRetention = (lastReview, difficulty) => {
   let retention = Math.exp(lastReview / difficulty) * 100;
   retention = retention.toFixed(2);
