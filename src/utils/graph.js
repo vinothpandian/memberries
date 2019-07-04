@@ -47,7 +47,9 @@ const getGraphDataForATopic = (topic) => {
     const retention = calculateRetention(-since, difficulty);
 
     return {
-      day,
+      day: moment(firstDay)
+        .add(day, 'day')
+        .format('MMM DD, YY'),
       [`Retention of ${id}`]: retention,
     };
   });
@@ -58,7 +60,9 @@ const getGraphDataForATopic = (topic) => {
     const projectedDay = since + index;
 
     return {
-      day,
+      day: moment(firstDay)
+        .add(day, 'day')
+        .format('MMM DD, YY'),
       [`Projected Retention of ${id}`]: calculateRetention(-projectedDay, difficulty),
     };
   });

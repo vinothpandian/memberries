@@ -9,7 +9,7 @@ import { findRecentReview } from '../utils/date';
 
 const adapter = new LocalStorage('db');
 
-localStorage.clear();
+// localStorage.clear();
 const defaultData = [
   {
     id: 'oaJwnzK1s',

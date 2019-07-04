@@ -68,7 +68,8 @@ const TopicGraph = ({ db, match, type }) => {
         </YAxis>
         <Tooltip
           labelFormatter={value => (value === 'Today' ? 'Today' : `Day ${value}`)}
-          formatter={value => [value, 'Retention']}
+          formatter={(value, name) => (name.includes('Projected') ? [value, 'Projected Retention'] : [value, 'Retention'])
+          }
         />
         <ReferenceLine x="Today">
           <Label value="Today" angle={-90} position="insideLeft" />
