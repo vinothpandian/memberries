@@ -27,10 +27,10 @@ const getGraphDataForATopic = (topic) => {
   // Get review as days
   const reviewDays = Object.keys(reviews).map(key => parseInt(key, 10));
 
-  const noOfDaysSinceFirstReview = moment().diff(moment(firstDay), 'days');
+  const today = moment().diff(moment(firstDay), 'days');
 
-  const sinceFirstReview = range(0, noOfDaysSinceFirstReview);
-  const fromLastReview = range(noOfDaysSinceFirstReview - 1, noOfDaysSinceFirstReview + 100);
+  const sinceFirstReview = range(0, today + 1);
+  const fromLastReview = range(today + 1, today + 11);
 
   let since = 0;
   let difficulty = firstDifficulty;
@@ -46,23 +46,32 @@ const getGraphDataForATopic = (topic) => {
 
     const retention = calculateRetention(-since, difficulty);
 
-    return { day, [`Retention of ${id}`]: retention };
+    return {
+      day,
+      [`Retention of ${id}`]: retention,
+    };
   });
 
-  since -= 1;
+  const dataOfToday = graphData.pop();
 
-  const projectedGraphData = fromLastReview
-    .map((day) => {
-      since += 1;
+  const projectedGraphData = fromLastReview.map((day, index) => {
+    const projectedDay = since + index;
 
-      return {
-        day,
-        [`Projected Retention of ${id}`]: calculateRetention(-since, difficulty),
-      };
-    })
-    .filter(data => data[`Projected Retention of ${id}`] > 1);
+    return {
+      day,
+      [`Projected Retention of ${id}`]: calculateRetention(-projectedDay, difficulty),
+    };
+  });
 
-  return [...graphData, ...projectedGraphData];
+  return [
+    ...graphData,
+    {
+      day: 'Today',
+      [`Retention of ${id}`]: dataOfToday[`Retention of ${id}`],
+      [`Projected Retention of ${id}`]: dataOfToday[`Retention of ${id}`],
+    },
+    ...projectedGraphData,
+  ];
 };
 
 const getGraphDataForAllTopics = topics => topics.reduce((acc, topic) => {

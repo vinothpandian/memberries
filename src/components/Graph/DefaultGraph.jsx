@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  ComposedChart,
+  LineChart,
   XAxis,
   YAxis,
   Legend,
@@ -38,7 +38,7 @@ const DefaultGraph = () => {
 
   return (
     <ResponsiveContainer width="40%" height={450}>
-      <ComposedChart data={data}>
+      <LineChart data={data}>
         <CartesianGrid stroke="#f5f5f5" />
         <XAxis dataKey="day" />
         <YAxis />
@@ -49,7 +49,7 @@ const DefaultGraph = () => {
         <Line type="monotone" dataKey="Medium" stroke={colors[2]} />
         <Line type="monotone" dataKey="Hard" stroke={colors[3]} />
         <Line type="monotone" dataKey="Very hard" stroke={colors[4]} />
-      </ComposedChart>
+      </LineChart>
     </ResponsiveContainer>
   );
 };

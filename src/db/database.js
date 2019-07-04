@@ -5,10 +5,11 @@ import * as randomColor from 'randomcolor';
 
 import moment from 'moment';
 import lastReviewed from './testcase';
-import { findRecentReview } from '../utils';
+import { findRecentReview } from '../utils/date';
 
 const adapter = new LocalStorage('db');
 
+localStorage.clear();
 const defaultData = [
   {
     id: 'oaJwnzK1s',
@@ -16,16 +17,20 @@ const defaultData = [
     description: 'storybook basix',
     lastReviewed: [
       {
-        reviewDate: 1551041919171,
+        reviewDate: new Date(2019, 5, 29).valueOf(),
+        difficulty: 1,
+      },
+      {
+        reviewDate: new Date(2019, 6, 2).valueOf(),
         difficulty: 5,
       },
       {
-        reviewDate: 1550050719171,
+        reviewDate: new Date(2019, 6, 3).valueOf(),
         difficulty: 1,
       },
     ],
     difficulty: 1,
-    color: randomColor({ luminosity: 'bright' }),
+    color: randomColor({ luminosity: 'dark' }),
   },
   {
     id: 'c9dC1SXtD',
@@ -33,12 +38,8 @@ const defaultData = [
     description: 'redux with react',
     lastReviewed: [
       {
-        reviewDate: 1561541919171,
+        reviewDate: new Date(2019, 6, 3).valueOf(),
         difficulty: 1,
-      },
-      {
-        reviewDate: 1560591519171,
-        difficulty: 2,
       },
     ],
     difficulty: 4,

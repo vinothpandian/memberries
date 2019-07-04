@@ -9,4 +9,4 @@ storiesOf('Graph', module)
   .addDecorator(story => <FullPageGrid>{story()}</FullPageGrid>)
   .add('default', () => <DefaultGraph />)
   .add('topics', () => <MultiTopicGraph />)
-  .add('single topic', () => <TopicGraph />);
+  .add('single topic', () => <TopicGraph type="monotone" />);

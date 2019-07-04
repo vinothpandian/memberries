@@ -12,6 +12,7 @@ import {
   Tooltip,
   Line,
   Label,
+  ReferenceLine,
   ResponsiveContainer,
 } from 'recharts';
 
@@ -20,7 +21,7 @@ import { Database, withDb } from '../../db';
 import { updateRetentionForATopic } from '../../utils/retention';
 import { getGraphDataForATopic } from '../../utils/graph';
 
-const TopicGraph = ({ db, match }) => {
+const TopicGraph = ({ db, match, type }) => {
   const [topic, setTopic] = useState({});
   const [graphData, setGraphData] = useState([]);
 
@@ -48,7 +49,7 @@ const TopicGraph = ({ db, match }) => {
   }, [db, id]);
 
   return (
-    <ResponsiveContainer width="40%" height={450}>
+    <ResponsiveContainer width="50%" height={450}>
       <LineChart
         data={graphData}
         margin={{
@@ -65,18 +66,24 @@ const TopicGraph = ({ db, match }) => {
         <YAxis domain={[0, 100]}>
           <Label value="Retention" angle={-90} position="insideLeft" />
         </YAxis>
-        <Tooltip labelFormatter={value => `Day ${value}`} />
+        <Tooltip
+          labelFormatter={value => (value === 'Today' ? 'Today' : `Day ${value}`)}
+          formatter={value => [value, 'Retention']}
+        />
+        <ReferenceLine x="Today">
+          <Label value="Today" angle={-90} position="insideLeft" />
+        </ReferenceLine>
         <Line
           unit="%"
           key={topic.name}
-          type="monotone"
+          type={type}
           stroke={topic.color}
           dataKey={`Retention of ${topic.id}`}
         />
         <Line
           unit="%"
           key={topic.id}
-          type="monotone"
+          type={type}
           strokeDasharray="3 3"
           stroke={topic.color}
           dataKey={`Projected Retention of ${topic.id}`}
@@ -86,9 +93,14 @@ const TopicGraph = ({ db, match }) => {
   );
 };
 
+TopicGraph.defaultProps = {
+  type: 'monotype',
+};
+
 TopicGraph.propTypes = {
   db: PropTypes.instanceOf(Database).isRequired,
   match: ReactRouterPropTypes.match.isRequired,
+  type: PropTypes.string,
 };
 
 export default compose(
