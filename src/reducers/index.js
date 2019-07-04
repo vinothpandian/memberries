@@ -1,9 +1,8 @@
-import { randomColor } from 'randomcolor';
+import randomColor from 'randomcolor';
+import shortid from 'shortid';
 import { handleActions } from 'redux-actions';
 
-import {
-  FETCH_TOPIC, FETCH_TOPICS, ADD_TOPIC, UPDATE_TOPIC,
-} from '../constants';
+import { ADD_TOPIC, UPDATE_TOPIC } from '../constants';
 
 const defaultState = {
   topics: [
@@ -62,15 +61,36 @@ const defaultState = {
   ],
 };
 
-const fetchTopic = (state, action) => state;
-const fetchTopics = (state, action) => state;
-const addTopic = (state, action) => state;
+const addTopic = (state, action) => {
+  const { payload } = action;
+  const { name, difficulty, description } = payload;
+
+  const id = shortid.generate();
+  const color = randomColor({ luminosity: 'bright' });
+  const lastReviewed = [
+    {
+      reviewDate: Date.now().valueOf(),
+      difficulty,
+    },
+  ];
+
+  const newTopic = {
+    id,
+    name,
+    description,
+    lastReviewed,
+    difficulty,
+    color,
+  };
+
+  state.topics.push(newTopic);
+
+  return state;
+};
 const updateTopic = (state, action) => state;
 
 export default handleActions(
   {
-    [FETCH_TOPIC]: fetchTopic,
-    [FETCH_TOPICS]: fetchTopics,
     [ADD_TOPIC]: addTopic,
     [UPDATE_TOPIC]: updateTopic,
   },

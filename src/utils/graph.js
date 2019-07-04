@@ -57,7 +57,7 @@ const getGraphDataForATopic = (topic) => {
   const dataOfToday = graphData.pop();
 
   const projectedGraphData = fromLastReview.map((day, index) => {
-    const projectedDay = since + index;
+    const projectedDay = since + 1 + index;
 
     return {
       day: moment(firstDay)

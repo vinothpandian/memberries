@@ -10,9 +10,10 @@ import { getGraphDataForATopic } from '../../utils/graph';
 const SingleTopic = ({ match, topics }) => {
   const { id } = match.params;
   const [topic] = topics.filter(obj => obj.id === id);
-  const graphData = getGraphDataForATopic(topic);
 
-  if (!topic || !graphData) return null;
+  if (!topic) return null;
+
+  const graphData = getGraphDataForATopic(topic);
 
   return (
     <Fragment>

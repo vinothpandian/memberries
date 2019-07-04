@@ -8,9 +8,12 @@ import { compose } from 'recompose';
 
 import { string, object, number } from 'yup';
 
+import { useDispatch } from 'react-redux';
 import { withDb, Database } from '../../db';
 import formProps from './formProps';
 import Form from './Form';
+import { ADD_TOPIC } from '../../constants/index';
+import { addTopic } from '../../actions/index';
 
 const schema = object({
   name: string().required('Name is required'),
@@ -21,24 +24,29 @@ const schema = object({
     .required('Difficulty is required'),
 });
 
-const FormikForm = ({ db, history, initialValues }) => (
-  <Formik
-    validationSchema={schema}
-    initialValues={initialValues}
-    onSubmit={async (values) => {
-      const { name, description, difficulty } = values;
+const FormikForm = ({ db, history, initialValues }) => {
+  const dispatch = useDispatch();
 
-      try {
-        await db.pushTopic(name, description, difficulty);
-        history.push('/');
-      } catch (error) {
-        history.push({ pathname: '/error', state: { message: error.message } });
-      }
-    }}
-  >
-    {props => <Form {...props} />}
-  </Formik>
-);
+  return (
+    <Formik
+      validationSchema={schema}
+      initialValues={initialValues}
+      onSubmit={async (values) => {
+        const { name, description, difficulty } = values;
+
+        try {
+          // await db.pushTopic(name, description, difficulty);
+          dispatch(addTopic(values));
+          history.push('/');
+        } catch (error) {
+          history.push({ pathname: '/error', state: { message: error.message } });
+        }
+      }}
+    >
+      {props => <Form {...props} />}
+    </Formik>
+  );
+};
 
 FormikForm.defaultProps = {
   initialValues: {
