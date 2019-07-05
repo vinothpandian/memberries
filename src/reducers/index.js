@@ -9,7 +9,7 @@ import { fromJS, Map } from 'immutable';
 import { ADD_TOPIC, UPDATE_TOPIC, DELETE_TOPIC } from '../constants';
 import { findRecentReviewInDays } from '../utils/date';
 
-const defaultState = fromJS({
+const debugState = fromJS({
   topics: [
     {
       id: 'oaJwnzK1s',
@@ -77,6 +77,10 @@ const defaultState = fromJS({
       color: '#c55be5',
     },
   ],
+});
+
+const defaultState = fromJS({
+  topics: [],
 });
 
 const addTopic = (state, action) => {
