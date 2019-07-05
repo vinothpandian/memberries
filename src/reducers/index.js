@@ -6,7 +6,7 @@ import moment from 'moment';
 
 import { fromJS, Map } from 'immutable';
 
-import { ADD_TOPIC, UPDATE_TOPIC } from '../constants';
+import { ADD_TOPIC, UPDATE_TOPIC, DELETE_TOPIC } from '../constants';
 import { findRecentReviewInDays } from '../utils/date';
 
 const defaultState = fromJS({
@@ -136,9 +136,21 @@ const updateTopic = (state, action) => {
   return newState;
 };
 
+const deleteTopic = (state, action) => {
+  const { payload } = action;
+  const { id } = payload;
+
+  const filteredTopics = state.get('topics').filter(topic => topic.get('id') !== id);
+
+  const newState = state.set('topics', filteredTopics);
+
+  return newState;
+};
+
 export default handleActions(
   {
     [ADD_TOPIC]: addTopic,
+    [DELETE_TOPIC]: deleteTopic,
     [UPDATE_TOPIC]: updateTopic,
   },
   defaultState,
