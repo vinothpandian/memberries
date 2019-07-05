@@ -14,8 +14,10 @@ import Button from '@material-ui/core/Button';
 
 import { makeStyles } from '@material-ui/core/styles';
 
+import { useDispatch } from 'react-redux';
 import DifficultyButtons from '../DifficultyButtons/index';
 import { Database, withDb } from '../../db';
+import { updateTopic } from '../../actions';
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -40,6 +42,7 @@ const ReviewForm = ({
   db, history, id, initialValues,
 }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   return (
     <Formik
@@ -50,7 +53,8 @@ const ReviewForm = ({
         const { difficulty } = values;
 
         try {
-          await db.updateTopic(id, difficulty);
+          dispatch(updateTopic({ id, difficulty }));
+          // await db.updateTopic(id, difficulty);
           // history.push('/');
         } catch (error) {
           history.push({ pathname: '/error', state: { message: error.message } });

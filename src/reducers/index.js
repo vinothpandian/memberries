@@ -2,7 +2,10 @@ import randomColor from 'randomcolor';
 import shortid from 'shortid';
 import { handleActions } from 'redux-actions';
 
+import moment from 'moment';
+
 import { ADD_TOPIC, UPDATE_TOPIC } from '../constants';
+import { findRecentReviewInDays } from '../utils/date';
 
 const defaultState = {
   topics: [
@@ -87,7 +90,33 @@ const addTopic = (state, action) => {
 
   return state;
 };
-const updateTopic = (state, action) => state;
+
+const updateTopic = (state, action) => {
+  const { payload } = action;
+  const { topics } = state;
+  const { id, difficulty } = payload;
+
+  const [topic] = topics.filter(obj => obj.id === id);
+  const { lastReviewed } = topic;
+
+  const isSameDay = moment().isSame(findRecentReviewInDays(lastReviewed), 'day');
+
+  if (isSameDay) return state;
+
+  lastReviewed.push({
+    reviewDate: Date.now().valueOf(),
+    difficulty,
+  });
+
+  const updatedTopic = {
+    ...topic,
+    lastReviewed,
+  };
+
+  const newTopics = [...topics, updatedTopic];
+
+  return { topics: newTopics };
+};
 
 export default handleActions(
   {
