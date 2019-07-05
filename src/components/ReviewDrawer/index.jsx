@@ -1,12 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Drawer from '@material-ui/core/Drawer';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Divider from '@material-ui/core/Divider';
-import isEmpty from 'lodash/isEmpty';
-import { DbProps } from '../../db';
 
+import { Map } from 'immutable';
 import LastReviewedGrid from './LastReviewedGrid';
 import RetentionGrid from './RetentionGrid';
 import DrawerToolbar from './DrawerToolbar';
@@ -30,15 +30,18 @@ const useStyles = makeStyles(() => ({
 const ReviewDrawer = ({ topic }) => {
   const classes = useStyles();
 
-  const {
-    id, name, description, lastReviewed, retention, difficulty,
-  } = topic;
+  const id = topic.get('id');
+  const name = topic.get('name');
+  const description = topic.get('description');
+  const lastReviewed = topic.get('lastReviewed');
+  const retention = topic.get('retention');
+  const difficulty = topic.get('difficulty');
 
   const initialValues = {
     difficulty,
   };
 
-  if (isEmpty(topic)) return null;
+  if (!topic) return null;
 
   return (
     <Drawer
@@ -61,7 +64,7 @@ const ReviewDrawer = ({ topic }) => {
 };
 
 ReviewDrawer.propTypes = {
-  topic: DbProps.topic.isRequired,
+  topic: PropTypes.instanceOf(Map).isRequired,
 };
 
 export default ReviewDrawer;

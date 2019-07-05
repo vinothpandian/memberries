@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
+import { List } from 'immutable';
 import { findRecentReview } from '../../utils/date';
 
 const useStyles = makeStyles(theme => ({
@@ -35,12 +36,7 @@ const LastReviewedGrid = ({ lastReviewed }) => {
 };
 
 LastReviewedGrid.propTypes = {
-  lastReviewed: PropTypes.arrayOf(
-    PropTypes.shape({
-      reviewDate: PropTypes.number,
-      difficulty: PropTypes.number,
-    }),
-  ).isRequired,
+  lastReviewed: PropTypes.instanceOf(List).isRequired,
 };
 
 export default LastReviewedGrid;

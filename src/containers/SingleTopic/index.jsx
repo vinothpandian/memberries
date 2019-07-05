@@ -1,15 +1,17 @@
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
+
 import { withRouter } from 'react-router';
 import ReactRouterPropTypes from 'react-router-prop-types';
 
+import { List } from 'immutable';
 import { TopicGraph } from '../../components/Graph';
 import ReviewDrawer from '../../components/ReviewDrawer';
-import { DbProps } from '../../db';
 import { getGraphDataForATopic } from '../../utils/graph';
 
 const SingleTopic = ({ match, topics }) => {
   const { id } = match.params;
-  const [topic] = topics.filter(obj => obj.id === id);
+  const topic = topics.filter(obj => obj.get('id') === id).first();
 
   if (!topic) return null;
 
@@ -25,7 +27,7 @@ const SingleTopic = ({ match, topics }) => {
 
 SingleTopic.propTypes = {
   match: ReactRouterPropTypes.match.isRequired,
-  topics: DbProps.topics.isRequired,
+  topics: PropTypes.instanceOf(List).isRequired,
 };
 
 export default withRouter(SingleTopic);
