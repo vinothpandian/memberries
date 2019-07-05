@@ -8,6 +8,7 @@
     "@material-ui/lab": "^4.0.0-alpha.18",
     "@storybook/addon-knobs": "^5.1.9",
     "formik": "^1.5.7",
+    "gh-pages": "^2.0.1",
     "immutable": "^4.0.0-rc.12",
     "lodash": "^4.17.11",
     "lowdb": "^1.0.0",
@@ -36,7 +37,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -63,5 +66,6 @@
     "eslint-plugin-jsx-a11y": "^6.1.1",
     "eslint-plugin-react": "^7.11.0",
     "storybook-react-router": "^1.0.5"
-  }
+  },
+  "homepage": "https://vinoth.info/memberries"
 }
