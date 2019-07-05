@@ -1,5 +1,5 @@
 import randomColor from 'randomcolor';
-import shortid from 'shortid';
+
 import { handleActions } from 'redux-actions';
 
 import moment from 'moment';
@@ -63,14 +63,28 @@ const defaultState = fromJS({
       difficulty: 5,
       color: randomColor({ luminosity: 'bright' }),
     },
+    {
+      id: 'Gh0wgcwSV',
+      name: 'a',
+      description: 'a',
+      lastReviewed: [
+        {
+          reviewDate: 1562361933790,
+          difficulty: 3,
+        },
+      ],
+      difficulty: 3,
+      color: '#c55be5',
+    },
   ],
 });
 
 const addTopic = (state, action) => {
   const { payload } = action;
-  const { name, difficulty, description } = payload;
+  const {
+    id, name, difficulty, description,
+  } = payload;
 
-  const id = shortid.generate();
   const color = randomColor({ luminosity: 'bright' });
   const lastReviewed = [
     {
@@ -88,9 +102,7 @@ const addTopic = (state, action) => {
     color,
   });
 
-  const newState = state.get('topics').push(newTopic);
-
-  console.log(newState.toJS());
+  const newState = state.updateIn(['topics'], arr => arr.push(newTopic));
 
   return newState;
 };

@@ -8,6 +8,7 @@ import { compose } from 'recompose';
 import { string, object, number } from 'yup';
 
 import { useDispatch } from 'react-redux';
+import shortid from 'shortid';
 import formProps from './formProps';
 import Form from './Form';
 import { addTopic } from '../../actions';
@@ -30,8 +31,10 @@ const FormikForm = ({ history, initialValues }) => {
       initialValues={initialValues}
       onSubmit={async (values) => {
         try {
-          dispatch(addTopic(values));
-          history.push('/');
+          const id = shortid.generate();
+          const payload = { ...values, id };
+          dispatch(addTopic(payload));
+          history.push(`/review/${id}`);
         } catch (error) {
           history.push({ pathname: '/error', state: { message: error.message } });
         }
