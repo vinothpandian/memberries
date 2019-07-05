@@ -1,7 +1,9 @@
 import { findRecentReview, findRecentReviewInDays } from './date';
 
 export const calculateRetention = (lastReview, difficulty) => {
-  let retention = Math.exp(lastReview / difficulty) * 100;
+  const calculatedDifficulty = Math.abs(difficulty - 6);
+
+  let retention = Math.exp(lastReview / calculatedDifficulty) * 100;
   retention = retention.toFixed(2);
   return parseFloat(retention);
 };

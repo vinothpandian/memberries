@@ -8,15 +8,18 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import Button from '@material-ui/core/Button';
 import { useDispatch } from 'react-redux';
-import { deleteTopic } from '../../actions/index';
+import { withRouter } from 'react-router';
+import ReactRouterPropTypes from 'react-router-prop-types';
+import { deleteTopic } from '../../actions';
 
 const Warning = ({
-  id, open, handleClose, name, retention,
+  id, open, handleClose, name, retention, history,
 }) => {
   const dispatch = useDispatch();
 
   const deleteClicked = () => {
     dispatch(deleteTopic({ id }));
+    history.replace('/');
     handleClose();
   };
 
@@ -54,6 +57,7 @@ Warning.propTypes = {
   handleClose: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
   retention: PropTypes.number.isRequired,
+  history: ReactRouterPropTypes.history.isRequired,
 };
 
-export default Warning;
+export default withRouter(Warning);

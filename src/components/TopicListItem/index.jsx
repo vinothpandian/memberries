@@ -12,10 +12,8 @@ import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 import { Map } from 'immutable';
-import { useDispatch } from 'react-redux';
 import { findRecentReview } from '../../utils/date';
 import ColorAvatar from '../ColorAvatar';
-import { deleteTopic } from '../../actions';
 import Warning from './Warning';
 
 const TopicListItem = ({ topic }) => {

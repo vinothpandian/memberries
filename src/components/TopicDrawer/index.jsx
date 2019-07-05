@@ -42,7 +42,13 @@ const TopicDrawer = ({ topics }) => {
           To review
         </Typography>
       </div>
-      <TopicList topics={topics} />
+      {topics.isEmpty() ? (
+        <Typography className={classes.toolbarTitle} variant="body2" noWrap color="textSecondary">
+          Add topics to see retention
+        </Typography>
+      ) : (
+        <TopicList topics={topics} />
+      )}
       <AddButton />
     </Drawer>
   );

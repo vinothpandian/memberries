@@ -13,7 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import randomColor from 'randomcolor';
 import { calculateRetention } from '../../utils/retention';
 
-const colors = randomColor({ count: 5, seed: 2 });
+const colors = randomColor({ count: 5, luminosity: 'dark' });
 
 const useStyles = makeStyles(() => ({
   fontColor: {
@@ -28,11 +28,11 @@ const DefaultGraph = () => {
   const data = days
     .map(day => ({
       day,
-      'Very easy': calculateRetention(-day, 5),
-      Easy: calculateRetention(-day, 4),
+      'Very easy': calculateRetention(-day, 1),
+      Easy: calculateRetention(-day, 2),
       Medium: calculateRetention(-day, 3),
-      Hard: calculateRetention(-day, 2),
-      'Very hard': calculateRetention(-day, 1),
+      Hard: calculateRetention(-day, 4),
+      'Very hard': calculateRetention(-day, 5),
     }))
     .filter(v => v['Very easy'] > 10);
 
@@ -42,7 +42,7 @@ const DefaultGraph = () => {
         <CartesianGrid stroke="#f5f5f5" />
         <XAxis dataKey="day" />
         <YAxis />
-        <Tooltip />
+        <Tooltip labelFormatter={value => (value === 'Today' ? 'Today' : `Day ${value}`)} />
         <Legend className={classes.fontColor} />
         <Line type="monotone" dataKey="Very easy" stroke={colors[0]} />
         <Line type="monotone" dataKey="Easy" stroke={colors[1]} />

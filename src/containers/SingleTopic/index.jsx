@@ -9,11 +9,14 @@ import { TopicGraph } from '../../components/Graph';
 import ReviewDrawer from '../../components/ReviewDrawer';
 import { getGraphDataForATopic } from '../../utils/graph';
 
-const SingleTopic = ({ match, topics }) => {
+const SingleTopic = ({ match, history, topics }) => {
   const { id } = match.params;
   const topic = topics.filter(obj => obj.get('id') === id).first();
 
-  if (!topic) return null;
+  if (!topic) {
+    history.push('/error');
+    return null;
+  }
 
   const graphData = getGraphDataForATopic(topic);
 
@@ -27,6 +30,7 @@ const SingleTopic = ({ match, topics }) => {
 
 SingleTopic.propTypes = {
   match: ReactRouterPropTypes.match.isRequired,
+  history: ReactRouterPropTypes.history.isRequired,
   topics: PropTypes.instanceOf(List).isRequired,
 };
 

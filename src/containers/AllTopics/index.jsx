@@ -2,12 +2,16 @@ import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import { List } from 'immutable';
-import { MultiTopicGraph } from '../../components/Graph';
+import { MultiTopicGraph, DefaultGraph } from '../../components/Graph';
 import OverviewDrawer from '../../components/OverviewDrawer';
 
 const AllTopics = ({ topics, graphData }) => (
   <Fragment>
-    <MultiTopicGraph topics={topics} graphData={graphData} />
+    {topics.isEmpty() ? (
+      <DefaultGraph />
+    ) : (
+      <MultiTopicGraph topics={topics} graphData={graphData} />
+    )}
     <OverviewDrawer />
   </Fragment>
 );
