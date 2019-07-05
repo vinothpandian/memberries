@@ -1,9 +1,9 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 
+import { List } from 'immutable';
 import { MultiTopicGraph } from '../../components/Graph';
 import OverviewDrawer from '../../components/OverviewDrawer';
-import { DbProps } from '../../db';
 
 const AllTopics = ({ topics, graphData }) => (
   <Fragment>
@@ -13,9 +13,8 @@ const AllTopics = ({ topics, graphData }) => (
 );
 
 AllTopics.propTypes = {
-  topics: DbProps.topics.isRequired,
-  // eslint-disable-next-line
-  graphData: PropTypes.any,
+  topics: PropTypes.instanceOf(List).isRequired,
+  graphData: PropTypes.instanceOf(List).isRequired,
 };
 
 export default AllTopics;

@@ -8,12 +8,17 @@ import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 
+import { Map } from 'immutable';
 import { findRecentReview } from '../../utils/date';
 import ColorAvatar from '../ColorAvatar';
 
-const TopicListItem = ({
-  id, name, retention, lastReviewed, color,
-}) => {
+const TopicListItem = ({ topic }) => {
+  const id = topic.get('id');
+  const color = topic.get('color');
+  const name = topic.get('name');
+  const retention = topic.get('retention');
+  const lastReviewed = topic.get('lastReviewed');
+
   const lastReviewFromNow = lastReviewed
     ? findRecentReview(lastReviewed, { asMoment: true }).fromNow()
     : '';
@@ -47,16 +52,7 @@ const TopicListItem = ({
 };
 
 TopicListItem.propTypes = {
-  id: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  retention: PropTypes.number.isRequired,
-  lastReviewed: PropTypes.arrayOf(
-    PropTypes.shape({
-      reviewDate: PropTypes.number,
-      difficulty: PropTypes.number,
-    }),
-  ).isRequired,
-  color: PropTypes.string.isRequired,
+  topic: PropTypes.instanceOf(Map).isRequired,
 };
 
 export default TopicListItem;

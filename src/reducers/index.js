@@ -4,10 +4,12 @@ import { handleActions } from 'redux-actions';
 
 import moment from 'moment';
 
+import { fromJS } from 'immutable';
+
 import { ADD_TOPIC, UPDATE_TOPIC } from '../constants';
 import { findRecentReviewInDays } from '../utils/date';
 
-const defaultState = {
+const defaultState = fromJS({
   topics: [
     {
       id: 'oaJwnzK1s',
@@ -62,7 +64,7 @@ const defaultState = {
       color: randomColor({ luminosity: 'bright' }),
     },
   ],
-};
+});
 
 const addTopic = (state, action) => {
   const { payload } = action;
@@ -86,9 +88,9 @@ const addTopic = (state, action) => {
     color,
   };
 
-  state.topics.push(newTopic);
+  const newState = state.topics.push(newTopic);
 
-  return state;
+  return newState;
 };
 
 const updateTopic = (state, action) => {

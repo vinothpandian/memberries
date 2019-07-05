@@ -1,12 +1,10 @@
 import moment from 'moment';
 
-import last from 'lodash/last';
-import sortBy from 'lodash/sortBy';
-
 export const findRecentReviewInDays = reviewDate => moment(reviewDate).diff(moment(), 'day');
 
 export const findRecentReview = (reviews, asMoment = false) => {
-  const { reviewDate } = last(sortBy(reviews, 'reviewDate'));
+  const recentReview = reviews.sortBy(topic => topic.get('reviewDate')).last();
+  const reviewDate = recentReview.get('reviewDate');
 
   if (asMoment) {
     return moment(reviewDate);

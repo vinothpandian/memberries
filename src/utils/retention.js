@@ -7,16 +7,16 @@ export const calculateRetention = (lastReview, difficulty) => {
 };
 
 export const updateRetentionForATopic = (topic) => {
-  const { lastReviewed, difficulty } = topic;
+  const lastReviewed = topic.get('lastReviewed');
+  const difficulty = topic.get('difficulty');
 
   const reviewDate = findRecentReview(lastReviewed);
   const recentReviewInDays = findRecentReviewInDays(reviewDate);
   const retention = calculateRetention(recentReviewInDays, difficulty);
 
-  return {
-    ...topic,
-    retention,
-  };
+  const newTopic = topic.set('retention', retention);
+
+  return newTopic;
 };
 
 export const updateRetentionForTopics = topics => topics.map(updateRetentionForATopic);

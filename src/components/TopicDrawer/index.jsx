@@ -3,9 +3,10 @@ import Drawer from '@material-ui/core/Drawer';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 
+import { PropTypes } from 'prop-types';
+import { List } from 'immutable';
 import TopicList from '../TopicList';
 import AddButton from '../AddButton';
-import { DbProps } from '../../db';
 
 const drawerWidth = 360;
 
@@ -48,7 +49,7 @@ const TopicDrawer = ({ topics }) => {
 };
 
 TopicDrawer.propTypes = {
-  topics: DbProps.topics.isRequired,
+  topics: PropTypes.instanceOf(List).isRequired,
 };
 
 export default TopicDrawer;

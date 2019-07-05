@@ -1,86 +1,92 @@
 import moment from 'moment';
-import sortBy from 'lodash/sortBy';
-import range from 'lodash/range';
-import merge from 'lodash/merge';
+
+import { List, Map, Range } from 'immutable';
 import { calculateRetention } from './retention';
 
 const getGraphDataForATopic = (topic) => {
-  let { lastReviewed } = topic;
-  const { id } = topic;
-  lastReviewed = sortBy(lastReviewed, 'reviewDate');
+  let lastReviewed = topic.get('lastReviewed');
+  const id = topic.get('id');
+  lastReviewed = lastReviewed.sortBy(review => review.reviewDate);
 
   if (!lastReviewed) {
     return [];
   }
 
-  const firstReview = lastReviewed[0];
-  const firstDay = firstReview.reviewDate;
-  const firstDifficulty = firstReview.difficulty;
+  const firstReview = lastReviewed.first();
+  const firstDay = firstReview.get('reviewDate');
+  const firstDifficulty = firstReview.get('difficulty');
 
   //   assign difficulty to days
-  const reviews = lastReviewed.reduce((acc, { reviewDate, difficulty }) => {
-    const differenceFromFirstReviewDay = moment(reviewDate).diff(moment(firstDay), 'days');
-    acc[differenceFromFirstReviewDay] = difficulty;
-    return acc;
-  }, {});
+  const reviews = lastReviewed.reduce((previousReviews, review) => {
+    const reviewDate = review.get('reviewDate');
+    const difficulty = review.get('difficulty');
 
-  // Get review as days
-  const reviewDays = Object.keys(reviews).map(key => parseInt(key, 10));
+    const differenceFromFirstReviewDay = moment(reviewDate).diff(moment(firstDay), 'days');
+    const nextReviews = previousReviews.set(differenceFromFirstReviewDay, difficulty);
+    return nextReviews;
+  }, Map());
 
   const today = moment().diff(moment(firstDay), 'days');
 
-  const sinceFirstReview = range(0, today + 1);
-  const fromLastReview = range(today + 1, today + 11);
+  const sinceFirstReview = Range(0, today + 1);
+  const fromLastReview = Range(today + 1, today + 11);
 
   let since = 0;
   let difficulty = firstDifficulty;
 
-  const graphData = sinceFirstReview.map((day) => {
-    since += 1;
+  let currentGraphData = sinceFirstReview
+    .map((day) => {
+      since += 1;
 
-    // reset review to 100% on the day of review
-    if (reviewDays.includes(day)) {
-      since = 0;
-      difficulty = reviews[day];
-    }
+      // reset review to 100% on the day of review
+      if (reviews.has(day)) {
+        since = 0;
+        difficulty = reviews.get(day);
+      }
 
-    const retention = calculateRetention(-since, difficulty);
+      const retention = calculateRetention(-since, difficulty);
 
-    return {
-      day: moment(firstDay)
-        .add(day, 'day')
-        .format('MMM DD, YY'),
-      [`Retention of ${id}`]: retention,
-    };
-  });
+      return Map({
+        day: moment(firstDay)
+          .add(day, 'day')
+          .format('MMM DD, YY'),
+        [`Retention of ${id}`]: retention,
+      });
+    })
+    .toList();
 
-  const dataOfToday = graphData.pop();
+  const dataOfToday = currentGraphData.last();
+  currentGraphData = currentGraphData.pop();
 
-  const projectedGraphData = fromLastReview.map((day, index) => {
-    const projectedDay = since + 1 + index;
+  const projectedGraphData = fromLastReview
+    .map((day, index) => {
+      const projectedDay = since + 1 + index;
 
-    return {
-      day: moment(firstDay)
-        .add(day, 'day')
-        .format('MMM DD, YY'),
-      [`Projected Retention of ${id}`]: calculateRetention(-projectedDay, difficulty),
-    };
-  });
+      return Map({
+        day: moment(firstDay)
+          .add(day, 'day')
+          .format('MMM DD, YY'),
+        [`Projected Retention of ${id}`]: calculateRetention(-projectedDay, difficulty),
+      });
+    })
+    .toList();
 
-  return [
-    ...graphData,
-    {
+  const currentGraphDataWithToday = currentGraphData.push(
+    Map({
       day: 'Today',
-      [`Retention of ${id}`]: dataOfToday[`Retention of ${id}`],
-      [`Projected Retention of ${id}`]: dataOfToday[`Retention of ${id}`],
-    },
-    ...projectedGraphData,
-  ];
+      [`Retention of ${id}`]: dataOfToday.get(`Retention of ${id}`),
+      [`Projected Retention of ${id}`]: dataOfToday.get(`Retention of ${id}`),
+    }),
+  );
+
+  const graphData = currentGraphDataWithToday.concat(projectedGraphData);
+
+  return graphData;
 };
 
 const getGraphDataForAllTopics = topics => topics.reduce((acc, topic) => {
   const graphData = getGraphDataForATopic(topic);
-  return merge(acc, graphData);
-}, []);
+  return acc.merge(graphData);
+}, List());
 
 export { getGraphDataForATopic, getGraphDataForAllTopics };

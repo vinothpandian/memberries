@@ -12,7 +12,7 @@ import AllTopics from '../AllTopics';
 import AddTopic from '../../components/AddTopic';
 
 const HomePage = () => {
-  const fetchedTopics = useSelector(state => state.topics, shallowEqual);
+  const fetchedTopics = useSelector(state => state.get('topics'), shallowEqual);
   const topics = updateRetentionForTopics(fetchedTopics);
   const graphData = getGraphDataForAllTopics(topics);
 
