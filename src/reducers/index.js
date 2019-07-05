@@ -4,7 +4,7 @@ import { handleActions } from 'redux-actions';
 
 import moment from 'moment';
 
-import { fromJS } from 'immutable';
+import { fromJS, Map } from 'immutable';
 
 import { ADD_TOPIC, UPDATE_TOPIC } from '../constants';
 import { findRecentReviewInDays } from '../utils/date';
@@ -109,29 +109,31 @@ const addTopic = (state, action) => {
 
 const updateTopic = (state, action) => {
   const { payload } = action;
-  const { topics } = state;
   const { id, difficulty } = payload;
 
-  const [topic] = topics.filter(obj => obj.id === id);
-  const { lastReviewed } = topic;
+  const topic = state
+    .get('topics')
+    .filter(obj => obj.get('id') === id)
+    .first();
+
+  const lastReviewed = topic.get('lastReviewed');
 
   const isSameDay = moment().isSame(findRecentReviewInDays(lastReviewed), 'day');
 
   if (isSameDay) return state;
 
-  lastReviewed.push({
-    reviewDate: Date.now().valueOf(),
-    difficulty,
-  });
+  const updatedReviewDates = lastReviewed.push(
+    Map({
+      reviewDate: Date.now().valueOf(),
+      difficulty,
+    }),
+  );
 
-  const updatedTopic = {
-    ...topic,
-    lastReviewed,
-  };
+  const index = state.get('topics').findIndex(item => item.get('id') === id);
 
-  const newTopics = [...topics, updatedTopic];
+  const newState = state.updateIn(['topics'], arr => arr.update(index, item => item.set('lastReviewed', updatedReviewDates)));
 
-  return { topics: newTopics };
+  return newState;
 };
 
 export default handleActions(
