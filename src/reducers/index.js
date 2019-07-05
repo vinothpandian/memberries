@@ -8,80 +8,19 @@ import { fromJS, Map } from 'immutable';
 
 import { ADD_TOPIC, UPDATE_TOPIC, DELETE_TOPIC } from '../constants';
 import { findRecentReviewInDays } from '../utils/date';
+import Database from '../db/database';
 
-const debugState = fromJS({
-  topics: [
-    {
-      id: 'oaJwnzK1s',
-      name: 'Storybook',
-      description: 'storybook basix',
-      lastReviewed: [
-        {
-          reviewDate: new Date(2019, 5, 29).valueOf(),
-          difficulty: 1,
-        },
-        {
-          reviewDate: new Date(2019, 6, 2).valueOf(),
-          difficulty: 5,
-        },
-        {
-          reviewDate: new Date(2019, 6, 3).valueOf(),
-          difficulty: 1,
-        },
-      ],
-      difficulty: 1,
-      color: randomColor({ luminosity: 'dark' }),
-    },
-    {
-      id: 'c9dC1SXtD',
-      name: 'Redux',
-      description: 'redux with react',
-      lastReviewed: [
-        {
-          reviewDate: new Date(2019, 6, 3).valueOf(),
-          difficulty: 1,
-        },
-      ],
-      difficulty: 4,
-      color: randomColor({ luminosity: 'bright' }),
-    },
-    {
-      id: 'cYr6DEOpz',
-      name: 'Deep learning',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      lastReviewed: [
-        {
-          reviewDate: 1561801119171,
-          difficulty: 1,
-        },
-        {
-          reviewDate: Date.now().valueOf(),
-          difficulty: 2,
-        },
-      ],
-      difficulty: 5,
-      color: randomColor({ luminosity: 'bright' }),
-    },
-    {
-      id: 'Gh0wgcwSV',
-      name: 'a',
-      description: 'a',
-      lastReviewed: [
-        {
-          reviewDate: 1562361933790,
-          difficulty: 3,
-        },
-      ],
-      difficulty: 3,
-      color: '#c55be5',
-    },
-  ],
-});
+const db = new Database();
 
-const defaultState = fromJS({
-  topics: [],
-});
+const fromLocalDb = db.getTopics();
+
+const defaultState = fromLocalDb
+  ? fromJS({
+    topics: fromLocalDb,
+  })
+  : fromJS({
+    topics: [],
+  });
 
 const addTopic = (state, action) => {
   const { payload } = action;
@@ -107,6 +46,8 @@ const addTopic = (state, action) => {
   });
 
   const newState = state.updateIn(['topics'], arr => arr.push(newTopic));
+
+  db.setState(newState);
 
   return newState;
 };
@@ -137,6 +78,8 @@ const updateTopic = (state, action) => {
 
   const newState = state.updateIn(['topics'], arr => arr.update(index, item => item.set('lastReviewed', updatedReviewDates)));
 
+  db.setState(newState);
+
   return newState;
 };
 
@@ -147,6 +90,8 @@ const deleteTopic = (state, action) => {
   const filteredTopics = state.get('topics').filter(topic => topic.get('id') !== id);
 
   const newState = state.set('topics', filteredTopics);
+
+  db.setState(newState);
 
   return newState;
 };

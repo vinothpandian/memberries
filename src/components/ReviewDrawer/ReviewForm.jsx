@@ -54,10 +54,8 @@ const ReviewForm = ({
 
         try {
           dispatch(updateTopic({ id, difficulty }));
-          // await db.updateTopic(id, difficulty);
-          // history.push('/');
         } catch (error) {
-          history.push({ pathname: '/error', state: { message: error.message } });
+          history.replace({ pathname: '/error', state: { message: error.message } });
         }
       }}
     >

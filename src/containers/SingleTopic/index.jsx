@@ -14,7 +14,7 @@ const SingleTopic = ({ match, history, topics }) => {
   const topic = topics.filter(obj => obj.get('id') === id).first();
 
   if (!topic) {
-    history.push('/error');
+    history.replace('/error');
     return null;
   }
 

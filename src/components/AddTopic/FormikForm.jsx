@@ -36,7 +36,7 @@ const FormikForm = ({ history, initialValues }) => {
           dispatch(addTopic(payload));
           history.push(`/review/${id}`);
         } catch (error) {
-          history.push({ pathname: '/error', state: { message: error.message } });
+          history.replace({ pathname: '/error', state: { message: error.message } });
         }
       }}
     >
