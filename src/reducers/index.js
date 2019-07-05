@@ -79,16 +79,18 @@ const addTopic = (state, action) => {
     },
   ];
 
-  const newTopic = {
+  const newTopic = fromJS({
     id,
     name,
     description,
     lastReviewed,
     difficulty,
     color,
-  };
+  });
 
-  const newState = state.topics.push(newTopic);
+  const newState = state.get('topics').push(newTopic);
+
+  console.log(newState.toJS());
 
   return newState;
 };

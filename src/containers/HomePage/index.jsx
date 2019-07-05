@@ -13,10 +13,10 @@ import AddTopic from '../../components/AddTopic';
 
 const HomePage = () => {
   const fetchedTopics = useSelector(state => state.get('topics'), shallowEqual);
+  if (!fetchedTopics) return null;
+
   const topics = updateRetentionForTopics(fetchedTopics);
   const graphData = getGraphDataForAllTopics(topics);
-
-  if (!topics) return null;
 
   return (
     <React.Fragment>
