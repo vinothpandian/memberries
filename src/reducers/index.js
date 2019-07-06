@@ -8,19 +8,22 @@ import { fromJS, Map } from 'immutable';
 
 import { ADD_TOPIC, UPDATE_TOPIC, DELETE_TOPIC } from '../constants';
 import { findRecentReviewInDays } from '../utils/date';
-import Database from '../db/database';
+import { Database } from '../contexts/db';
+import { debugState } from '../contexts/db/testcase';
 
 const db = new Database();
 
 const fromLocalDb = db.getTopics();
 
-const defaultState = fromLocalDb
+let defaultState = fromLocalDb
   ? fromJS({
     topics: fromLocalDb,
   })
   : fromJS({
     topics: [],
   });
+
+defaultState = debugState;
 
 const addTopic = (state, action) => {
   const { payload } = action;

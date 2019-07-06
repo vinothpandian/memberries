@@ -4,7 +4,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import './App.scss';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Provider } from 'react-redux';
-import { DbProvider } from './db';
+import { DbProvider } from './contexts/db';
 
 import Routes from './routes';
 import store from './store';

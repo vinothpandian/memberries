@@ -16,7 +16,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { useDispatch } from 'react-redux';
 import DifficultyButtons from '../DifficultyButtons/index';
-import { Database, withDb } from '../../db';
+import { Database, withDb } from '../../contexts/db';
 import { updateTopic } from '../../actions';
 
 const useStyles = makeStyles(theme => ({
