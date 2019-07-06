@@ -2,17 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import Button from '@material-ui/core/Button';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 import { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router';
 import SignIn from '../SignIn';
+import SignUp from '../SignUp';
 
 const Sync = ({ open, handleClose }) => {
+  const [value, setValue] = React.useState(0);
   const dispatch = useDispatch();
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   return (
     <Dialog
@@ -21,10 +25,11 @@ const Sync = ({ open, handleClose }) => {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle id="alert-dialog-title">Sign In to sync your data</DialogTitle>
-      <DialogContent>
-        <SignIn />
-      </DialogContent>
+      <Tabs value={value} onChange={handleChange} variant="fullWidth">
+        <Tab label="Sign In" />
+        <Tab label="Sign Up" />
+      </Tabs>
+      <DialogContent>{value === 1 ? <SignUp /> : <SignIn />}</DialogContent>
     </Dialog>
   );
 };

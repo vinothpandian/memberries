@@ -14,6 +14,7 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(2),
   },
   submitButton: {
+    float: 'right',
     marginTop: theme.spacing(3),
   },
   difficultyButtons: {
@@ -44,7 +45,7 @@ const SignIn = () => {
       }) => (
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <Grid container>
-            <Grid item xs={8}>
+            <Grid item xs={12}>
               <TextField
                 type="email"
                 name="email"
@@ -58,7 +59,7 @@ const SignIn = () => {
                 helperText={errors.email || ''}
               />
             </Grid>
-            <Grid item xs={8}>
+            <Grid item xs={12}>
               <TextField
                 type="password"
                 name="password"
@@ -73,7 +74,7 @@ const SignIn = () => {
               />
             </Grid>
           </Grid>
-          <Button className={classes.submitButton} color="primary" type="submit">
+          <Button className={classes.submitButton} autoFocus color="primary" type="submit">
             Sign in
           </Button>
         </form>
