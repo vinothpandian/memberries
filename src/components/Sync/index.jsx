@@ -29,7 +29,9 @@ const Sync = ({ open, handleClose }) => {
         <Tab label="Sign In" />
         <Tab label="Sign Up" />
       </Tabs>
-      <DialogContent>{value === 1 ? <SignUp /> : <SignIn />}</DialogContent>
+      <DialogContent>
+        {value === 1 ? <SignUp handleClose={handleClose} /> : <SignIn handleClose={handleClose} />}
+      </DialogContent>
     </Dialog>
   );
 };

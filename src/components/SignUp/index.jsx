@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
     margin: theme.spacing(2),
   },
   submitButton: {
-    float: 'right',
+    float: 'left',
     marginTop: theme.spacing(3),
   },
   difficultyButtons: {

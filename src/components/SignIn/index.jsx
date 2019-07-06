@@ -1,4 +1,5 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 
 import { Formik } from 'formik';
 import { string, object } from 'yup';
@@ -8,6 +9,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 import { makeStyles } from '@material-ui/core/styles';
+import Firebase, { withFirebase } from '../../contexts/Firebase';
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -15,7 +17,11 @@ const useStyles = makeStyles(theme => ({
   },
   submitButton: {
     float: 'right',
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(1),
+  },
+  cancelButton: {
+    float: 'right',
+    marginTop: theme.spacing(1),
   },
   difficultyButtons: {
     marginLeft: theme.spacing(1),
@@ -29,15 +35,30 @@ const schema = object({
   password: string().required('Password is required'),
 });
 
-const SignIn = () => {
+const SignIn = ({ firebase, handleClose }) => {
   const classes = useStyles();
 
   return (
     <Formik
       validationSchema={schema}
       initialValues={{ email: '', password: '' }}
-      onSubmit={(values) => {
-        console.log(values);
+      onSubmit={async (values) => {
+        try {
+          await firebase.signInUser(values);
+          handleClose({
+            dialogOpen: true,
+            snackbarOpen: true,
+            variant: 'success',
+            message: 'Login successful',
+          })();
+        } catch (error) {
+          handleClose({
+            dialogOpen: false,
+            snackbarOpen: true,
+            variant: 'danger',
+            message: error.message,
+          })();
+        }
       }}
     >
       {({
@@ -77,10 +98,18 @@ const SignIn = () => {
           <Button className={classes.submitButton} autoFocus color="primary" type="submit">
             Sign in
           </Button>
+          <Button className={classes.cancelButton} onClick={handleClose()} color="secondary">
+            Cancel
+          </Button>
         </form>
       )}
     </Formik>
   );
 };
 
-export default SignIn;
+SignIn.propTypes = {
+  handleClose: PropTypes.func.isRequired,
+  firebase: PropTypes.instanceOf(Firebase).isRequired,
+};
+
+export default withFirebase(SignIn);
