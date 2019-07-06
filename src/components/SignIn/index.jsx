@@ -22,6 +22,7 @@ const useStyles = makeStyles(theme => ({
   cancelButton: {
     float: 'right',
     marginTop: theme.spacing(1),
+    marginRight: theme.spacing(2),
   },
   difficultyButtons: {
     marginLeft: theme.spacing(1),
@@ -46,16 +47,16 @@ const SignIn = ({ firebase, handleClose }) => {
         try {
           await firebase.signInUser(values);
           handleClose({
-            dialogOpen: true,
+            dialogOpen: false,
             snackbarOpen: true,
             variant: 'success',
             message: 'Login successful',
           })();
         } catch (error) {
           handleClose({
-            dialogOpen: false,
+            dialogOpen: true,
             snackbarOpen: true,
-            variant: 'danger',
+            variant: 'error',
             message: error.message,
           })();
         }
@@ -84,7 +85,7 @@ const SignIn = ({ firebase, handleClose }) => {
               <TextField
                 type="password"
                 name="password"
-                label="password"
+                label="Password"
                 value={values.password}
                 onChange={handleChange}
                 onBlur={handleBlur}

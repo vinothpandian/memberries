@@ -1,4 +1,5 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 
 import { Formik } from 'formik';
 import { string, object, ref } from 'yup';
@@ -8,14 +9,20 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 import { makeStyles } from '@material-ui/core/styles';
+import Firebase, { withFirebase } from '../../contexts/Firebase';
 
 const useStyles = makeStyles(theme => ({
   form: {
     margin: theme.spacing(2),
   },
   submitButton: {
-    float: 'left',
-    marginTop: theme.spacing(3),
+    float: 'right',
+    marginTop: theme.spacing(1),
+  },
+  cancelButton: {
+    float: 'right',
+    marginTop: theme.spacing(1),
+    marginRight: theme.spacing(2),
   },
   difficultyButtons: {
     marginLeft: theme.spacing(1),
@@ -37,15 +44,30 @@ const schema = object({
     .required('Password confirm is required'),
 });
 
-const SignUp = () => {
+const SignUp = ({ firebase, handleClose }) => {
   const classes = useStyles();
 
   return (
     <Formik
       validationSchema={schema}
       initialValues={{ email: '', password: '', confirmPassword: '' }}
-      onSubmit={(values) => {
-        console.log(values);
+      onSubmit={async (values) => {
+        try {
+          await firebase.createUser(values);
+          handleClose({
+            dialogOpen: false,
+            snackbarOpen: true,
+            variant: 'success',
+            message: 'User created successfully',
+          })();
+        } catch (error) {
+          handleClose({
+            dialogOpen: true,
+            snackbarOpen: true,
+            variant: 'error',
+            message: error.message,
+          })();
+        }
       }}
     >
       {({
@@ -71,7 +93,7 @@ const SignUp = () => {
               <TextField
                 type="password"
                 name="password"
-                label="password"
+                label="Password"
                 value={values.password}
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -85,7 +107,7 @@ const SignUp = () => {
               <TextField
                 type="password"
                 name="confirmPassword"
-                label="confirmPassword"
+                label="Confirm Password"
                 value={values.confirmPassword}
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -99,10 +121,18 @@ const SignUp = () => {
           <Button className={classes.submitButton} autoFocus color="primary" type="submit">
             Sign up
           </Button>
+          <Button className={classes.cancelButton} onClick={handleClose()} color="secondary">
+            Cancel
+          </Button>
         </form>
       )}
     </Formik>
   );
 };
 
-export default SignUp;
+SignUp.propTypes = {
+  handleClose: PropTypes.func.isRequired,
+  firebase: PropTypes.instanceOf(Firebase).isRequired,
+};
+
+export default withFirebase(SignUp);

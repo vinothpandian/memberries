@@ -88,7 +88,7 @@ const CustomSnackbar = ({
     open={snackbarOpen}
     onClose={onClose}
     anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-    autoHideDuration={1000}
+    autoHideDuration={variant === 'error' ? null : 1000}
   >
     <CustomSnackbarContent message={message} onClose={onClose} variant={variant} />
   </Snackbar>

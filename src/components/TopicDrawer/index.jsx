@@ -59,7 +59,6 @@ const TopicDrawer = ({ topics, user, firebase }) => {
     } = stateProps;
 
     setOpen(dialogOpen);
-
     setSnackbarProps({ snackbarOpen, variant, message });
   };
 
