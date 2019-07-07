@@ -108,7 +108,7 @@ const SignUp = ({ handleClose }) => {
           <Button className={classes.submitButton} autoFocus color="primary" type="submit">
             Sign up
           </Button>
-          <Button className={classes.cancelButton} onClick={handleClose()} color="secondary">
+          <Button className={classes.cancelButton} onClick={handleClose} color="secondary">
             Cancel
           </Button>
         </form>

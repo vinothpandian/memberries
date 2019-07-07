@@ -15,6 +15,7 @@ import AddButton from '../AddButton';
 import Sync from '../Sync';
 
 import { signOut } from '../../actions/user';
+import { DIALOG_CLOSE, DIALOG_OPEN } from '../../actions/dialog';
 
 const drawerWidth = 360;
 
@@ -36,36 +37,12 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const TopicDrawer = ({ topics }) => {
-  let user = useSelector(state => state.user, shallowEqual);
-  user = null;
-  // const uid = user.get('uid');
+  const user = useSelector(state => state.user.get('uid'), shallowEqual);
+  const open = useSelector(state => state.dialog.get('open'), shallowEqual);
 
   const dispatch = useDispatch();
 
-  const defaultSnackbarProps = {
-    snackbarOpen: false,
-    variant: 'info',
-    message: '',
-  };
-
-  const [snackbarProps, setSnackbarProps] = React.useState(defaultSnackbarProps);
-
-  const [open, setOpen] = React.useState(false);
   const classes = useStyles();
-
-  const handleDialog = state => stateProps => () => {
-    if (!stateProps) {
-      setOpen(state);
-      return;
-    }
-
-    const {
-      dialogOpen, snackbarOpen, variant, message,
-    } = stateProps;
-
-    setOpen(dialogOpen);
-    setSnackbarProps({ snackbarOpen, variant, message });
-  };
 
   return (
     <Drawer
@@ -83,12 +60,6 @@ const TopicDrawer = ({ topics }) => {
         {user ? (
           <IconButton
             onClick={() => {
-              setOpen(false);
-              setSnackbarProps({
-                snackbarOpen: true,
-                variant: 'warning',
-                message: 'User signed out',
-              });
               dispatch(signOut());
             }}
             className={classes.syncButton}
@@ -100,14 +71,21 @@ const TopicDrawer = ({ topics }) => {
         ) : (
           <React.Fragment>
             <IconButton
-              onClick={handleDialog(true)()}
+              onClick={() => {
+                dispatch({ type: DIALOG_OPEN });
+              }}
               className={classes.syncButton}
               edge="start"
               aria-label="sync"
             >
               <AccountIcon />
             </IconButton>
-            <Sync open={open} handleClose={handleDialog(false)} />
+            <Sync
+              open={open}
+              handleClose={() => {
+                dispatch({ type: DIALOG_CLOSE });
+              }}
+            />
           </React.Fragment>
         )}
       </Grid>
