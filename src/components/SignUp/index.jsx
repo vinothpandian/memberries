@@ -9,7 +9,8 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 import { makeStyles } from '@material-ui/core/styles';
-import Firebase, { withFirebase } from '../../contexts/Firebase';
+import { useDispatch } from 'react-redux';
+import { signUp } from '../../actions/user';
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -44,30 +45,16 @@ const schema = object({
     .required('Password confirm is required'),
 });
 
-const SignUp = ({ firebase, handleClose }) => {
+const SignUp = ({ handleClose }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   return (
     <Formik
       validationSchema={schema}
       initialValues={{ email: '', password: '', confirmPassword: '' }}
       onSubmit={async (values) => {
-        try {
-          await firebase.createUser(values);
-          handleClose({
-            dialogOpen: false,
-            snackbarOpen: true,
-            variant: 'success',
-            message: 'User created successfully',
-          })();
-        } catch (error) {
-          handleClose({
-            dialogOpen: true,
-            snackbarOpen: true,
-            variant: 'error',
-            message: error.message,
-          })();
-        }
+        dispatch(signUp(values));
       }}
     >
       {({
@@ -132,7 +119,6 @@ const SignUp = ({ firebase, handleClose }) => {
 
 SignUp.propTypes = {
   handleClose: PropTypes.func.isRequired,
-  firebase: PropTypes.instanceOf(Firebase).isRequired,
 };
 
-export default withFirebase(SignUp);
+export default SignUp;

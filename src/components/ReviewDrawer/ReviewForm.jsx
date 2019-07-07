@@ -4,7 +4,6 @@ import ReactRouterPropTypes from 'react-router-prop-types';
 import { withRouter } from 'react-router';
 
 import { Formik } from 'formik';
-import { compose } from 'recompose';
 
 import { object, number } from 'yup';
 
@@ -16,8 +15,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { useDispatch } from 'react-redux';
 import DifficultyButtons from '../DifficultyButtons/index';
-import { Database, withDb } from '../../contexts/db';
-import { updateTopic } from '../../actions';
+import { updateTopic } from '../../actions/topics';
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -38,9 +36,7 @@ const schema = object({
     .required('Difficulty is required'),
 });
 
-const ReviewForm = ({
-  db, history, id, initialValues,
-}) => {
+const ReviewForm = ({ history, id, initialValues }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -92,7 +88,6 @@ const ReviewForm = ({
 };
 
 ReviewForm.propTypes = {
-  db: PropTypes.instanceOf(Database).isRequired,
   history: ReactRouterPropTypes.history.isRequired,
   id: PropTypes.string.isRequired,
   initialValues: PropTypes.shape({
@@ -100,7 +95,4 @@ ReviewForm.propTypes = {
   }).isRequired,
 };
 
-export default compose(
-  withDb,
-  withRouter,
-)(ReviewForm);
+export default withRouter(ReviewForm);

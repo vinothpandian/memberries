@@ -6,16 +6,15 @@ import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
 import AccountIcon from '@material-ui/icons/AccountCircle';
 import ExitIcon from '@material-ui/icons/ExitToApp';
+import { shallowEqual, useSelector, useDispatch } from 'react-redux';
 
 import { PropTypes } from 'prop-types';
 import { List } from 'immutable';
-import { compose } from 'recompose';
 import TopicList from '../TopicList';
 import AddButton from '../AddButton';
 import Sync from '../Sync';
-import withAuthUser from '../../contexts/Session/AuthUserConsumer';
-import Firebase, { withFirebase } from '../../contexts/Firebase';
-import Snackbar from '../Snackbar';
+
+import { signOut } from '../../actions/user';
 
 const drawerWidth = 360;
 
@@ -36,7 +35,13 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const TopicDrawer = ({ topics, user, firebase }) => {
+const TopicDrawer = ({ topics }) => {
+  let user = useSelector(state => state.user, shallowEqual);
+  user = null;
+  // const uid = user.get('uid');
+
+  const dispatch = useDispatch();
+
   const defaultSnackbarProps = {
     snackbarOpen: false,
     variant: 'info',
@@ -84,7 +89,7 @@ const TopicDrawer = ({ topics, user, firebase }) => {
                 variant: 'warning',
                 message: 'User signed out',
               });
-              firebase.signOutUser();
+              dispatch(signOut());
             }}
             className={classes.syncButton}
             edge="start"
@@ -114,30 +119,12 @@ const TopicDrawer = ({ topics, user, firebase }) => {
         <TopicList topics={topics} />
       )}
       <AddButton />
-      <Snackbar
-        {...snackbarProps}
-        onClose={() => {
-          setSnackbarProps({
-            ...snackbarProps,
-            snackbarOpen: false,
-          });
-        }}
-      />
     </Drawer>
   );
 };
 
-TopicDrawer.defaultProps = {
-  user: '',
-};
-
 TopicDrawer.propTypes = {
-  user: PropTypes.string,
   topics: PropTypes.instanceOf(List).isRequired,
-  firebase: PropTypes.instanceOf(Firebase).isRequired,
 };
 
-export default compose(
-  withFirebase,
-  withAuthUser('uid'),
-)(TopicDrawer);
+export default TopicDrawer;

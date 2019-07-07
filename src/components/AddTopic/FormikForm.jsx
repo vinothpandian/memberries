@@ -3,7 +3,6 @@ import ReactRouterPropTypes from 'react-router-prop-types';
 import { withRouter } from 'react-router';
 
 import { Formik } from 'formik';
-import { compose } from 'recompose';
 
 import { string, object, number } from 'yup';
 
@@ -11,7 +10,7 @@ import { useDispatch } from 'react-redux';
 import shortid from 'shortid';
 import formProps from './formProps';
 import Form from './Form';
-import { addTopic } from '../../actions';
+import { addTopic } from '../../actions/topics';
 
 const schema = object({
   name: string().required('Name is required'),
@@ -58,4 +57,4 @@ FormikForm.propTypes = {
   initialValues: formProps,
 };
 
-export default compose(withRouter)(FormikForm);
+export default withRouter(FormikForm);

@@ -10,7 +10,6 @@ import IconButton from '@material-ui/core/IconButton';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import WarningIcon from '@material-ui/icons/Warning';
 import { makeStyles } from '@material-ui/core/styles';
-import Snackbar from '@material-ui/core/Snackbar';
 
 const variantIcon = {
   success: CheckCircleIcon,
@@ -48,11 +47,11 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function CustomSnackbarContent(props) {
+const Content = ({
+  message, onClose, variant, ...other
+}) => {
   const classes = useStyles();
-  const {
-    message, onClose, variant, ...other
-  } = props;
+
   const Icon = variantIcon[variant];
 
   return (
@@ -73,32 +72,12 @@ function CustomSnackbarContent(props) {
       {...other}
     />
   );
-}
+};
 
-CustomSnackbarContent.propTypes = {
+Content.propTypes = {
   message: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
   variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired,
 };
 
-const CustomSnackbar = ({
-  snackbarOpen, message, onClose, variant,
-}) => (
-  <Snackbar
-    open={snackbarOpen}
-    onClose={onClose}
-    anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-    autoHideDuration={variant === 'error' ? null : 1000}
-  >
-    <CustomSnackbarContent message={message} onClose={onClose} variant={variant} />
-  </Snackbar>
-);
-
-CustomSnackbar.propTypes = {
-  snackbarOpen: PropTypes.bool.isRequired,
-  message: PropTypes.string.isRequired,
-  onClose: PropTypes.func.isRequired,
-  variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']).isRequired,
-};
-
-export default CustomSnackbar;
+export default Content;

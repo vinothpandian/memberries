@@ -6,10 +6,9 @@ import moment from 'moment';
 
 import { fromJS, Map, List } from 'immutable';
 
-import { ADD_TOPIC, UPDATE_TOPIC, DELETE_TOPIC } from '../constants';
+import { ADD_TOPIC, UPDATE_TOPIC, DELETE_TOPIC } from '../actions/topics';
 import { findRecentReviewInDays } from '../utils/date';
-import { Database } from '../contexts/db';
-import { debugState } from '../contexts/db/testcase';
+import Database, { debugState } from '../utils/database';
 
 const db = new Database();
 
