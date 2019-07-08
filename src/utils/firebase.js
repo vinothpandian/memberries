@@ -26,7 +26,15 @@ export const getUserID = () => {
   return user.uid;
 };
 
-export const signUp = ({ email, password }) => auth.createUserWithEmailAndPassword(email, password);
+export const signUp = async ({ email, password }) => {
+  const user = await auth.createUserWithEmailAndPassword(email, password);
+
+  if (user) {
+    return user.user.uid;
+  }
+
+  return null;
+};
 
 export const signIn = async ({ email, password }) => {
   const user = await auth.signInWithEmailAndPassword(email, password);

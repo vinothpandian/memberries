@@ -13,14 +13,14 @@ const defaultReducer = (state, action) => {
   return state;
 };
 
-const signInUser = (state, action) => state.set('uid', action.uid);
+const addUser = (state, action) => state.set('uid', action.uid);
 
 const signOutUser = state => state.set('uid', null);
 
 export default handleActions(
   {
-    [SIGN_IN]: signInUser,
-    [SIGN_UP]: defaultReducer,
+    [SIGN_IN]: addUser,
+    [SIGN_UP]: addUser,
     [SIGN_OUT]: signOutUser,
   },
   defaultState,
