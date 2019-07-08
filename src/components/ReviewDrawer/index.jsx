@@ -58,7 +58,7 @@ const ReviewDrawer = ({ topic }) => {
       <Divider variant="middle" />
       <LastReviewedGrid lastReviewed={lastReviewed} />
       <Divider variant="middle" />
-      <ReviewForm id={id} initialValues={initialValues} />
+      <ReviewForm id={id} lastReviewed={lastReviewed} initialValues={initialValues} />
     </Drawer>
   );
 };

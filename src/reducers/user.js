@@ -8,11 +8,6 @@ const defaultState = Map({
   uid: null,
 });
 
-const defaultReducer = (state, action) => {
-  console.log(action);
-  return state;
-};
-
 const addUser = (state, action) => state.set('uid', action.uid);
 
 const signOutUser = state => state.set('uid', null);

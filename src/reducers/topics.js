@@ -1,12 +1,10 @@
-import randomColor from 'randomcolor';
-
 import { handleActions } from 'redux-actions';
 
 import moment from 'moment';
 
 import { fromJS, Map, List } from 'immutable';
 
-import { ADD_TOPIC, UPDATE_TOPIC, DELETE_TOPIC } from '../actions/topics';
+import { ADD_TOPIC_ASYNC, UPDATE_TOPIC, DELETE_TOPIC } from '../actions/topics';
 import { findRecentReviewInDays } from '../utils/date';
 import Database, { debugState } from '../utils/database';
 
@@ -20,28 +18,8 @@ defaultState = debugState.get('topics');
 
 const addTopic = (state, action) => {
   const { payload } = action;
-  const {
-    id, name, difficulty, description,
-  } = payload;
 
-  const color = randomColor({ luminosity: 'bright' });
-  const lastReviewed = [
-    {
-      reviewDate: Date.now().valueOf(),
-      difficulty,
-    },
-  ];
-
-  const newTopic = fromJS({
-    id,
-    name,
-    description,
-    lastReviewed,
-    difficulty,
-    color,
-  });
-
-  const newState = state.push(newTopic);
+  const newState = state.push(fromJS(payload));
 
   db.setState(newState);
 
@@ -50,23 +28,9 @@ const addTopic = (state, action) => {
 
 const updateTopic = (state, action) => {
   const { payload } = action;
-  const { id, difficulty } = payload;
+  const { id, updatedReviewDates } = payload;
 
   const index = state.findIndex(item => item.get('id') === id);
-  const topic = state.get(index);
-
-  const lastReviewed = topic.get('lastReviewed');
-
-  const isSameDay = moment().isSame(findRecentReviewInDays(lastReviewed), 'day');
-
-  if (isSameDay) return state;
-
-  const updatedReviewDates = lastReviewed.push(
-    Map({
-      reviewDate: Date.now().valueOf(),
-      difficulty,
-    }),
-  );
 
   const newState = state.update(index, item => item.set('lastReviewed', updatedReviewDates));
 
@@ -88,7 +52,7 @@ const deleteTopic = (state, action) => {
 
 export default handleActions(
   {
-    [ADD_TOPIC]: addTopic,
+    [ADD_TOPIC_ASYNC]: addTopic,
     [DELETE_TOPIC]: deleteTopic,
     [UPDATE_TOPIC]: updateTopic,
   },

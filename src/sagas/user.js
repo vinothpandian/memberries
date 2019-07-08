@@ -39,7 +39,7 @@ function* signUpAsync(payload) {
   }
 }
 
-export function* authorize(payload) {
+function* authorize(payload) {
   try {
     const uid = yield call(signIn, payload);
     yield put({ type: SIGN_IN, uid });
@@ -55,7 +55,7 @@ export function* authorize(payload) {
   }
 }
 
-export function* signInSignUpFlow() {
+function* signInSignUpFlow() {
   while (true) {
     const action = yield take([SIGN_IN_ASYNC, SIGN_UP_ASYNC]);
     const { payload } = action;

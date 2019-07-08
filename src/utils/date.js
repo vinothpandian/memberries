@@ -12,3 +12,5 @@ export const findRecentReview = (reviews, asMoment = false) => {
 
   return reviewDate;
 };
+
+export const isSameDay = lastReviewed => moment().isSame(findRecentReview(lastReviewed, { asMoment: true }), 'day');

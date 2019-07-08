@@ -14,8 +14,10 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { useDispatch } from 'react-redux';
+import { List } from 'immutable';
 import DifficultyButtons from '../DifficultyButtons/index';
 import { updateTopic } from '../../actions/topics';
+import { isSameDay } from '../../utils/date';
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -36,9 +38,15 @@ const schema = object({
     .required('Difficulty is required'),
 });
 
-const ReviewForm = ({ history, id, initialValues }) => {
+const ReviewForm = ({
+  history, id, initialValues, lastReviewed,
+}) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+
+  if (isSameDay(lastReviewed)) {
+    return null;
+  }
 
   return (
     <Formik
@@ -49,7 +57,7 @@ const ReviewForm = ({ history, id, initialValues }) => {
         const { difficulty } = values;
 
         try {
-          dispatch(updateTopic({ id, difficulty }));
+          dispatch(updateTopic({ id, difficulty, lastReviewed }));
         } catch (error) {
           history.replace({ pathname: '/error', state: { message: error.message } });
         }
@@ -90,6 +98,7 @@ const ReviewForm = ({ history, id, initialValues }) => {
 ReviewForm.propTypes = {
   history: ReactRouterPropTypes.history.isRequired,
   id: PropTypes.string.isRequired,
+  lastReviewed: PropTypes.instanceOf(List).isRequired,
   initialValues: PropTypes.shape({
     difficulty: PropTypes.number,
   }).isRequired,

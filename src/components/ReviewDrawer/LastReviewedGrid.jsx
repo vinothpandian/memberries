@@ -17,6 +17,8 @@ const useStyles = makeStyles(theme => ({
 const LastReviewedGrid = ({ lastReviewed }) => {
   const classes = useStyles();
 
+  const lastReview = findRecentReview(lastReviewed, { asMoment: true });
+
   return (
     <Grid className={classes.grid} container direction="column" spacing={1}>
       <Grid item>
@@ -25,11 +27,8 @@ const LastReviewedGrid = ({ lastReviewed }) => {
         </Typography>
       </Grid>
       <Grid item>
-        <Typography variant="h5">
-          {lastReviewed
-            ? findRecentReview(lastReviewed, { asMoment: true }).format('MMM Do YYYY')
-            : ''}
-        </Typography>
+        <Typography variant="overline">{lastReviewed ? lastReview.fromNow() : ''}</Typography>
+        <Typography variant="h5">{lastReviewed ? lastReview.format('MMM Do YYYY') : ''}</Typography>
       </Grid>
     </Grid>
   );
