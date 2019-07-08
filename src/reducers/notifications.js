@@ -14,6 +14,7 @@ const defaultState = Map({
   open: false,
   message: '',
   variant: 'info',
+  anchorOrigin: { vertical: 'bottom', horizontal: 'center' },
 });
 
 const errorNotification = defaultMessage => (state, action) => state.merge({

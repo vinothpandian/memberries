@@ -1,6 +1,7 @@
 import React from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
 import { useSelector, useDispatch } from 'react-redux';
+
 import Content from './Content';
 import { CLOSE_NOTIFICATION } from '../../actions/notifications';
 
@@ -10,6 +11,7 @@ const Notification = () => {
   const open = states.get('open');
   const message = states.get('message');
   const variant = states.get('variant');
+  const anchorOrigin = states.get('anchorOrigin');
 
   const onClose = () => {
     dispatch({ type: CLOSE_NOTIFICATION });
@@ -19,7 +21,10 @@ const Notification = () => {
     <Snackbar
       open={open}
       onClose={onClose}
-      anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
+      ContentProps={{
+        'aria-describedby': 'message-id',
+      }}
+      anchorOrigin={anchorOrigin}
       autoHideDuration={variant === 'error' ? null : 1500}
     >
       <Content message={message} onClose={onClose} variant={variant} />
