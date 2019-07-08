@@ -53,7 +53,12 @@ const SignUp = ({ handleClose }) => {
     <Formik
       validationSchema={schema}
       initialValues={{ email: '', password: '', confirmPassword: '' }}
-      onSubmit={async (values) => {
+      onSubmit={async (values, { resetForm }) => {
+        resetForm({
+          ...values,
+          password: '',
+          confirmPassword: '',
+        });
         dispatch(signUp(values));
       }}
     >
