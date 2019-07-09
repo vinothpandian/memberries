@@ -86,7 +86,7 @@ function* signInSignUpFlow() {
         yield call(signOut);
         yield put({ type: SIGN_OUT });
         yield put({ type: SIGN_OUT_SUCCESS });
-        yield put({ type: CLEAR_TOPICS });
+        // yield put({ type: CLEAR_TOPICS });
       }
     }
   }
