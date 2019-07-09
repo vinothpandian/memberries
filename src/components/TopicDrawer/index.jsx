@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     width: drawerWidth,
   },
   toolbar: theme.mixins.toolbar,
-  syncButton: {
+  iconButton: {
     marginRight: theme.spacing(2),
   },
   toolbarTitle: {
@@ -62,9 +62,10 @@ const TopicDrawer = ({ topics }) => {
             onClick={() => {
               dispatch(signOut());
             }}
-            className={classes.syncButton}
+            className={classes.iconButton}
             edge="start"
-            aria-label="sync"
+            aria-label="exit"
+            color="secondary"
           >
             <ExitIcon />
           </IconButton>
@@ -74,9 +75,10 @@ const TopicDrawer = ({ topics }) => {
               onClick={() => {
                 dispatch({ type: DIALOG_OPEN });
               }}
-              className={classes.syncButton}
+              className={classes.iconButton}
               edge="start"
-              aria-label="sync"
+              aria-label="login"
+              color="secondary"
             >
               <AccountIcon />
             </IconButton>

@@ -9,6 +9,7 @@ import Routes from './routes';
 import store from './store';
 import Notification from './components/Notification';
 
+
 function App() {
   return (
     <Provider store={store}>

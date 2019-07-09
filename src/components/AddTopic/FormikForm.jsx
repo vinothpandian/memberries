@@ -33,7 +33,7 @@ const FormikForm = ({ history, initialValues }) => {
           const id = shortid.generate();
           const payload = { ...values, id };
           dispatch(addTopic(payload));
-          history.push(`/review/${id}`);
+          history.push('/');
         } catch (error) {
           history.replace({ pathname: '/error', state: { message: error.message } });
         }

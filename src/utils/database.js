@@ -20,7 +20,7 @@ class Database {
   }
 
   setState(newState) {
-    this.db.setState(newState.toJS()).write();
+    this.db.setState({ topics: newState }).write();
   }
 
   getTopics() {

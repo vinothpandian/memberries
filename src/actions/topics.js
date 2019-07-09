@@ -3,10 +3,15 @@ import { createAction } from 'redux-actions';
 import randomColor from 'randomcolor';
 import { Map } from 'immutable';
 
+export const FETCH_TOPICS = 'FETCH_TOPICS';
+export const FETCH_TOPICS_ASYNC = 'FETCH_TOPICS_ASYNC';
+
 export const ADD_TOPIC = 'ADD_TOPIC';
 export const ADD_TOPIC_ASYNC = 'ADD_TOPIC_ASYNC';
+
 export const UPDATE_TOPIC = 'UPDATE_TOPIC';
 export const UPDATE_TOPIC_ASYNC = 'UPDATE_TOPIC_ASYNC';
+
 export const DELETE_TOPIC = 'DELETE_TOPIC';
 export const DELETE_TOPIC_ASYNC = 'DELETE_TOPIC_ASYNC';
 

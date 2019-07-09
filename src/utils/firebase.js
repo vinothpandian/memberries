@@ -1,6 +1,7 @@
 import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
+import { stateToFirebase } from './index';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_APIKEY,
@@ -15,15 +16,20 @@ const firebaseConfig = {
 app.initializeApp(firebaseConfig);
 export const auth = app.auth();
 export const database = app.database();
-export const databaseRef = ref => database.ref(`users/${ref}`);
+export const databaseRef = ref => database.ref(`users/${ref}/topics`);
 
-export const getUserID = () => {
-  const user = auth.currentUser;
+export const getUserID = async () => {
+  const uid = await new Promise((resolve) => {
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        resolve(user.uid);
+      } else {
+        resolve();
+      }
+    });
+  });
 
-  if (!user) {
-    return null;
-  }
-  return user.uid;
+  return uid;
 };
 
 export const signUp = async ({ email, password }) => {
@@ -50,27 +56,70 @@ export const signOut = () => {
   auth.signOut();
 };
 
-export const setState = (newState) => {
-  const userID = getUserID();
-
-  if (!userID) {
-    window.alert('Not signed in. Data not synced');
-    return;
-  }
-
-  databaseRef(userID).update(newState.toJS());
-};
-
-export const getTopics = async () => {
-  const userID = getUserID();
+export const fetchTopics = async () => {
+  const userID = await getUserID();
 
   if (!userID) {
     return [];
   }
 
-  const topics = await databaseRef(userID)
-    .child('topics')
-    .once('value');
+  const snapshot = await databaseRef(userID).once('value');
+
+  const topics = {};
+
+  snapshot.forEach((child) => {
+    topics[child.key] = child.val();
+  });
 
   return topics;
+};
+
+export const addTopic = async (topic) => {
+  const userID = await getUserID();
+
+  if (!userID) {
+    return;
+  }
+
+  await databaseRef(userID)
+    .child(topic.id)
+    .set(topic);
+};
+
+export const updateTopic = async ({ id, updatedReviewDates }) => {
+  const userID = await getUserID();
+
+  if (!userID) {
+    return;
+  }
+
+  await databaseRef(userID)
+    .child(id)
+    .update({
+      lastReviewed: updatedReviewDates.toJS(),
+    });
+};
+
+export const deleteTopic = async ({ id }) => {
+  const userID = await getUserID();
+
+  if (!userID) {
+    return;
+  }
+
+  await databaseRef(userID)
+    .child(id)
+    .remove();
+};
+
+export const syncUpload = async (topics) => {
+  const userID = await getUserID();
+
+  if (!userID) {
+    return;
+  }
+
+  const topicsToUpload = stateToFirebase(topics);
+
+  await databaseRef(userID).set(topicsToUpload);
 };
