@@ -15,6 +15,8 @@ export const UPDATE_TOPIC_ASYNC = 'UPDATE_TOPIC_ASYNC';
 export const DELETE_TOPIC = 'DELETE_TOPIC';
 export const DELETE_TOPIC_ASYNC = 'DELETE_TOPIC_ASYNC';
 
+export const CLEAR_TOPICS = 'CLEAR_TOPICS';
+
 export const deleteTopic = createAction(DELETE_TOPIC_ASYNC);
 
 export const updateTopic = createAction(UPDATE_TOPIC_ASYNC, ({ id, difficulty, lastReviewed }) => {

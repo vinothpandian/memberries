@@ -22,7 +22,7 @@ import {
 } from '../actions/notifications';
 
 import { DIALOG_CLOSE } from '../actions/dialog';
-import { FETCH_TOPICS, FETCH_TOPICS_ASYNC } from '../actions/topics';
+import { CLEAR_TOPICS, FETCH_TOPICS_ASYNC } from '../actions/topics';
 
 import {
   signIn, signUp, signOut, getUserID,
@@ -34,6 +34,7 @@ function* signUpAsync(payload) {
     yield put({ type: SIGN_UP, uid });
     yield put({ type: DIALOG_CLOSE });
     yield put({ type: SIGN_UP_SUCCESS });
+    yield put({ type: FETCH_TOPICS_ASYNC });
   } catch (error) {
     yield put({ type: SIGN_UP_ERROR, message: error.message });
   } finally {
@@ -81,11 +82,11 @@ function* signInSignUpFlow() {
 
       const followUpAction = yield take([SIGN_OUT_ASYNC, SIGN_IN_ERROR, SIGN_UP_ERROR]);
       if (followUpAction.type === SIGN_OUT_ASYNC) {
-        yield put({ type: FETCH_TOPICS_ASYNC });
         yield cancel(task);
         yield call(signOut);
         yield put({ type: SIGN_OUT });
         yield put({ type: SIGN_OUT_SUCCESS });
+        yield put({ type: CLEAR_TOPICS });
       }
     }
   }

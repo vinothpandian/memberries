@@ -1,9 +1,13 @@
 import { handleActions } from 'redux-actions';
 
-import { fromJS, List, mergeDeep } from 'immutable';
+import { fromJS, List } from 'immutable';
 
 import {
-  ADD_TOPIC, UPDATE_TOPIC, DELETE_TOPIC, FETCH_TOPICS,
+  ADD_TOPIC,
+  UPDATE_TOPIC,
+  DELETE_TOPIC,
+  FETCH_TOPICS,
+  CLEAR_TOPICS,
 } from '../actions/topics';
 
 import Database from '../utils/database';
@@ -51,11 +55,14 @@ const deleteTopic = (state, action) => {
 const fetchTopics = (state, action) => {
   const { mergedTopics } = action;
 
-  const newState = mergeDeep(state, mergedTopics);
+  db.setState(mergedTopics);
 
-  db.setState(newState);
+  return mergedTopics;
+};
 
-  return newState;
+const clearTopics = () => {
+  db.clearState();
+  return List();
 };
 
 export default handleActions(
@@ -64,6 +71,7 @@ export default handleActions(
     [ADD_TOPIC]: addTopic,
     [DELETE_TOPIC]: deleteTopic,
     [UPDATE_TOPIC]: updateTopic,
+    [CLEAR_TOPICS]: clearTopics,
   },
   defaultState,
 );

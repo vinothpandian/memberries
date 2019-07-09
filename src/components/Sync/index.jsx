@@ -5,14 +5,12 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router';
 import SignIn from '../SignIn';
 import SignUp from '../SignUp';
 
 const Sync = ({ open, handleClose }) => {
   const [value, setValue] = React.useState(0);
-  const dispatch = useDispatch();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

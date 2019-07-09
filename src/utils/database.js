@@ -26,6 +26,10 @@ class Database {
   getTopics() {
     return this.db.get('topics').value();
   }
+
+  clearState() {
+    this.db.setState({ topics: [] }).write();
+  }
 }
 
 export default Database;
