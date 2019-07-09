@@ -15,7 +15,7 @@ const Appbar = () => {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" color="inherit">
+      <AppBar position="fixed" color="inherit">
         <Toolbar>
           <Typography variant="h6" color="inherit">
             Remember?
