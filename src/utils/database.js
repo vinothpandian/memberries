@@ -1,3 +1,6 @@
+import low from 'lowdb';
+import LocalStorage from 'lowdb/adapters/LocalStorage';
+
 import moment from 'moment';
 import random from 'lodash/random';
 import range from 'lodash/range';
@@ -5,9 +8,35 @@ import { fromJS } from 'immutable';
 
 import randomColor from 'randomcolor';
 
+const adapter = new LocalStorage('db');
+
+const defaultData = [];
+
+class Database {
+  constructor() {
+    this.db = low(adapter);
+
+    this.db.defaults({ topics: defaultData }).write();
+  }
+
+  setState(newState) {
+    this.db.setState({ topics: newState }).write();
+  }
+
+  getTopics() {
+    return this.db.get('topics').value();
+  }
+
+  clearState() {
+    this.db.setState({ topics: [] }).write();
+  }
+}
+
+export default Database;
+
 const now = moment();
 
-const lastReviewed = range(random(1, 6, false))
+export const lastReviewed = range(random(1, 6, false))
   .map(_ => random(1, 6, false))
   .map(day => ({
     reviewDate: now.subtract(day, 'days').valueOf(),
@@ -83,5 +112,3 @@ export const debugState = fromJS({
     },
   ],
 });
-
-export default lastReviewed;

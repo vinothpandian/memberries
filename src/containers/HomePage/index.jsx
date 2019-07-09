@@ -12,7 +12,7 @@ import AllTopics from '../AllTopics';
 import AddTopic from '../../components/AddTopic';
 
 const HomePage = () => {
-  const fetchedTopics = useSelector(state => state.get('topics'), shallowEqual);
+  const fetchedTopics = useSelector(state => state.topics, shallowEqual);
   if (!fetchedTopics) return null;
 
   const topics = updateRetentionForTopics(fetchedTopics);

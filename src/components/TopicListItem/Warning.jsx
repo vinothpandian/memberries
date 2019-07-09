@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 import { useDispatch } from 'react-redux';
 import { withRouter } from 'react-router';
 import ReactRouterPropTypes from 'react-router-prop-types';
-import { deleteTopic } from '../../actions';
+import { deleteTopic } from '../../actions/topics';
 
 const Warning = ({
   id, open, handleClose, name, retention, history,

@@ -4,7 +4,6 @@ import ReactRouterPropTypes from 'react-router-prop-types';
 import { withRouter } from 'react-router';
 
 import { Formik } from 'formik';
-import { compose } from 'recompose';
 
 import { object, number } from 'yup';
 
@@ -15,9 +14,10 @@ import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { useDispatch } from 'react-redux';
+import { List } from 'immutable';
 import DifficultyButtons from '../DifficultyButtons/index';
-import { Database, withDb } from '../../db';
-import { updateTopic } from '../../actions';
+import { updateTopic } from '../../actions/topics';
+import { isSameDay } from '../../utils/date';
 
 const useStyles = makeStyles(theme => ({
   form: {
@@ -39,10 +39,14 @@ const schema = object({
 });
 
 const ReviewForm = ({
-  db, history, id, initialValues,
+  history, id, initialValues, lastReviewed,
 }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+
+  if (isSameDay(lastReviewed)) {
+    return null;
+  }
 
   return (
     <Formik
@@ -53,7 +57,7 @@ const ReviewForm = ({
         const { difficulty } = values;
 
         try {
-          dispatch(updateTopic({ id, difficulty }));
+          dispatch(updateTopic({ id, difficulty, lastReviewed }));
         } catch (error) {
           history.replace({ pathname: '/error', state: { message: error.message } });
         }
@@ -92,15 +96,12 @@ const ReviewForm = ({
 };
 
 ReviewForm.propTypes = {
-  db: PropTypes.instanceOf(Database).isRequired,
   history: ReactRouterPropTypes.history.isRequired,
   id: PropTypes.string.isRequired,
+  lastReviewed: PropTypes.instanceOf(List).isRequired,
   initialValues: PropTypes.shape({
     difficulty: PropTypes.number,
   }).isRequired,
 };
 
-export default compose(
-  withDb,
-  withRouter,
-)(ReviewForm);
+export default withRouter(ReviewForm);

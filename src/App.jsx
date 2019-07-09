@@ -4,22 +4,22 @@ import { HashRouter as Router } from 'react-router-dom';
 import './App.scss';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Provider } from 'react-redux';
-import { DbProvider } from './db';
 
 import Routes from './routes';
 import store from './store';
+import Notification from './components/Notification';
+
 
 function App() {
   return (
     <Provider store={store}>
-      <DbProvider>
-        <React.Fragment>
-          <CssBaseline />
-          <Router>
-            <Routes />
-          </Router>
-        </React.Fragment>
-      </DbProvider>
+      <React.Fragment>
+        <CssBaseline />
+        <Router>
+          <Routes />
+        </Router>
+        <Notification />
+      </React.Fragment>
     </Provider>
   );
 }
