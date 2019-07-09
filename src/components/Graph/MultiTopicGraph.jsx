@@ -15,7 +15,8 @@ import {
 import { List } from 'immutable';
 
 const MultiTopicGraph = ({ topics, graphData }) => {
-  const data = graphData.toJS();
+  let data = graphData.toJS();
+  data = data.sort((a, b) => a.key - b.key);
 
   return (
     <ResponsiveContainer width="60%" height={500}>
